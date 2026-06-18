@@ -1,8 +1,0 @@
-{
-  "__type__": "cc.TextAsset",
-  "_name": "README",
-  "_objFlags": 0,
-  "__editorExtras__": {},
-  "_native": "",
-  "text": "# Textures\n\n放置贴图资源：\n\n- `bg_grass.png`\n- `hole_wood.png`\n- `mole_normal.png`\n- `mole_golden.png`\n- `mole_bomb.png`\n- `btn_primary.png`\n- `btn_secondary.png`\n- `btn_pause.png`\n- `icon_score.png`\n- `icon_time.png`\n\n详细设计说明见 `docs/ART_AUDIO_SPEC.md`。\n\n"
-}

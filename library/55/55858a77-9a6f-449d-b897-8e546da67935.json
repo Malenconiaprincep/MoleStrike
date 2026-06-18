@@ -1,8 +1,0 @@
-{
-  "__type__": "cc.TextAsset",
-  "_name": "README",
-  "_objFlags": 0,
-  "__editorExtras__": {},
-  "_native": "",
-  "text": "# Audio\n\n放置音效文件：\n\n- `sfx_button_click.mp3`\n- `sfx_mole_appear.mp3`\n- `sfx_hit_mole.mp3`\n- `sfx_countdown_end.mp3`\n- `sfx_game_win.mp3`\n\n详细风格说明见 `docs/ART_AUDIO_SPEC.md`。\n\n"
-}
