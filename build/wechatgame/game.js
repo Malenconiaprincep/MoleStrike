@@ -51,7 +51,7 @@ System.warmup({
 });
 
 firstScreen.start('default', 'default', 'false').then(() => {
-    return System.import('./application.416b1.js');
+    return System.import('./application.2caaf.js');
 }).then((module) => {
     return firstScreen.setProgress(0.2).then(() => Promise.resolve(module));
 }).then(({ Application }) => {

@@ -54,7 +54,7 @@ function loadCC() {
         },
     });
 
-    System.import('./application.0116e.js').then(({ Application }) => {
+    System.import('./application.9f956.js').then(({ Application }) => {
         return new Application();
     }).then((application) => {
         return onApplicationCreated(application);

@@ -1,7 +1,7 @@
 System.register(["cc"], function (_export, _context) {
   "use strict";
 
-  var _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, Graphics, resources, Sprite, SpriteFrame, UITransform, ArtResourceManager, _crd, ArtAssetKey, ART_PATHS, GAMEPLAY_ART_KEYS;
+  var _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, Graphics, Node, resources, Sprite, SpriteFrame, Texture2D, UITransform, ArtResourceManager, _crd, ArtAssetKey, ART_PATHS, GAMEPLAY_ART_KEYS;
 
   _export("ArtResourceManager", void 0);
 
@@ -11,9 +11,11 @@ System.register(["cc"], function (_export, _context) {
       __checkObsolete__ = _cc.__checkObsolete__;
       __checkObsoleteInNamespace__ = _cc.__checkObsoleteInNamespace__;
       Graphics = _cc.Graphics;
+      Node = _cc.Node;
       resources = _cc.resources;
       Sprite = _cc.Sprite;
       SpriteFrame = _cc.SpriteFrame;
+      Texture2D = _cc.Texture2D;
       UITransform = _cc.UITransform;
     }],
     execute: function () {
@@ -25,7 +27,7 @@ System.register(["cc"], function (_export, _context) {
        * 可由运行时加载的正式美术资源。
        * 路径统一维护在这里，避免业务组件依赖具体目录结构。
        */
-      __checkObsolete__(['Graphics', 'Node', 'resources', 'Sprite', 'SpriteFrame', 'UITransform']);
+      __checkObsolete__(['Graphics', 'Node', 'resources', 'Sprite', 'SpriteFrame', 'Texture2D', 'UITransform']);
 
       _export("ArtAssetKey", ArtAssetKey = /*#__PURE__*/function (ArtAssetKey) {
         ArtAssetKey["GameplayBackground"] = "GameplayBackground";
@@ -33,17 +35,31 @@ System.register(["cc"], function (_export, _context) {
         ArtAssetKey["GoldenMole"] = "GoldenMole";
         ArtAssetKey["BombMole"] = "BombMole";
         ArtAssetKey["WoodHole"] = "WoodHole";
+        ArtAssetKey["PrimaryButton"] = "PrimaryButton";
+        ArtAssetKey["SecondaryButton"] = "SecondaryButton";
+        ArtAssetKey["PauseButton"] = "PauseButton";
+        ArtAssetKey["TitleSign"] = "TitleSign";
+        ArtAssetKey["ResultCard"] = "ResultCard";
+        ArtAssetKey["ScoreIcon"] = "ScoreIcon";
+        ArtAssetKey["TimeIcon"] = "TimeIcon";
         return ArtAssetKey;
       }({}));
 
       ART_PATHS = {
-        [ArtAssetKey.GameplayBackground]: 'textures/gameplay/gameplay_background/spriteFrame',
-        [ArtAssetKey.NormalMole]: 'textures/gameplay/mole_normal/spriteFrame',
-        [ArtAssetKey.GoldenMole]: 'textures/gameplay/mole_golden/spriteFrame',
-        [ArtAssetKey.BombMole]: 'textures/gameplay/mole_bomb/spriteFrame',
-        [ArtAssetKey.WoodHole]: 'textures/gameplay/hole_wood/spriteFrame'
+        [ArtAssetKey.GameplayBackground]: 'textures/gameplay/gameplay_background/texture',
+        [ArtAssetKey.NormalMole]: 'textures/gameplay/mole_normal/texture',
+        [ArtAssetKey.GoldenMole]: 'textures/gameplay/mole_golden/texture',
+        [ArtAssetKey.BombMole]: 'textures/gameplay/mole_bomb/texture',
+        [ArtAssetKey.WoodHole]: 'textures/gameplay/hole_wood/texture',
+        [ArtAssetKey.PrimaryButton]: 'textures/ui/btn_primary/texture',
+        [ArtAssetKey.SecondaryButton]: 'textures/ui/btn_secondary/texture',
+        [ArtAssetKey.PauseButton]: 'textures/ui/btn_pause/texture',
+        [ArtAssetKey.TitleSign]: 'textures/ui/title_sign/texture',
+        [ArtAssetKey.ResultCard]: 'textures/ui/result_card/texture',
+        [ArtAssetKey.ScoreIcon]: 'textures/ui/icon_score/texture',
+        [ArtAssetKey.TimeIcon]: 'textures/ui/icon_time/texture'
       };
-      GAMEPLAY_ART_KEYS = [ArtAssetKey.GameplayBackground, ArtAssetKey.NormalMole, ArtAssetKey.GoldenMole, ArtAssetKey.BombMole, ArtAssetKey.WoodHole];
+      GAMEPLAY_ART_KEYS = [ArtAssetKey.GameplayBackground, ArtAssetKey.NormalMole, ArtAssetKey.GoldenMole, ArtAssetKey.BombMole, ArtAssetKey.WoodHole, ArtAssetKey.PrimaryButton, ArtAssetKey.SecondaryButton, ArtAssetKey.PauseButton, ArtAssetKey.TitleSign, ArtAssetKey.ResultCard, ArtAssetKey.ScoreIcon, ArtAssetKey.TimeIcon];
       /**
        * 美术资源加载与缓存入口。
        * Cocos 的 resources.load 本身会缓存资源，这里额外合并并发请求并统一处理降级逻辑。
@@ -57,19 +73,32 @@ System.register(["cc"], function (_export, _context) {
         }
 
         static applySprite(node, key, width, height) {
-          var _node$getComponent;
+          var _node$getChildByName, _artwork$getComponent, _artwork$getComponent2;
 
-          const sprite = (_node$getComponent = node.getComponent(Sprite)) != null ? _node$getComponent : node.addComponent(Sprite);
+          const artworkName = `Artwork_${key}`;
+          const artwork = (_node$getChildByName = node.getChildByName(artworkName)) != null ? _node$getChildByName : new Node(artworkName);
+
+          if (!artwork.parent) {
+            node.addChild(artwork);
+          }
+
+          artwork.setSiblingIndex(0);
+          artwork.layer = node.layer;
+          artwork.setPosition(0, 0, 0);
+          const artworkTransform = (_artwork$getComponent = artwork.getComponent(UITransform)) != null ? _artwork$getComponent : artwork.addComponent(UITransform);
+          artworkTransform.setContentSize(width, height);
+          const sprite = (_artwork$getComponent2 = artwork.getComponent(Sprite)) != null ? _artwork$getComponent2 : artwork.addComponent(Sprite);
           sprite.enabled = false;
           sprite.sizeMode = Sprite.SizeMode.CUSTOM;
           this.loadSpriteFrame(key, spriteFrame => {
-            var _node$getComponent2;
+            var _node$getComponent;
 
-            if (!spriteFrame || !node.isValid) {
+            if (!spriteFrame || !node.isValid || !artwork.isValid) {
               return;
             }
 
-            (_node$getComponent2 = node.getComponent(UITransform)) == null || _node$getComponent2.setContentSize(width, height);
+            (_node$getComponent = node.getComponent(UITransform)) == null || _node$getComponent.setContentSize(width, height);
+            artwork.layer = node.layer;
             sprite.spriteFrame = spriteFrame;
             sprite.enabled = true; // 正式贴图加载成功后关闭程序绘制，加载失败时它仍是可靠的兜底画面。
 
@@ -97,10 +126,13 @@ System.register(["cc"], function (_export, _context) {
           }
 
           this.pendingCallbacks.set(key, [callback]);
-          resources.load(ART_PATHS[key], SpriteFrame, (error, spriteFrame) => {
+          resources.load(ART_PATHS[key], Texture2D, (error, texture) => {
             var _this$pendingCallback;
 
-            if (!error && spriteFrame) {
+            const spriteFrame = !error && texture ? new SpriteFrame() : null;
+
+            if (spriteFrame && texture) {
+              spriteFrame.texture = texture;
               this.spriteFrames.set(key, spriteFrame);
             }
 

@@ -1,5 +1,6 @@
 import { _decorator, Component, Label, Node, tween, UIOpacity, Vec3 } from 'cc';
 import { AudioManager } from '../core/AudioManager';
+import { AnalyticsManager } from '../core/AnalyticsManager';
 import { StorageManager } from '../core/StorageManager';
 
 const { ccclass, property } = _decorator;
@@ -79,6 +80,7 @@ export class TutorialManager extends Component {
     public handleNext(): void {
         this.audioManager?.playButtonClick();
         if (this.pageIndex >= TUTORIAL_PAGES.length - 1) {
+            AnalyticsManager.track('tutorial_complete');
             this.complete();
             return;
         }
@@ -89,6 +91,7 @@ export class TutorialManager extends Component {
 
     public handleSkip(): void {
         this.audioManager?.playButtonClick();
+        AnalyticsManager.track('tutorial_skip', { page: this.pageIndex + 1 });
         this.complete();
     }
 

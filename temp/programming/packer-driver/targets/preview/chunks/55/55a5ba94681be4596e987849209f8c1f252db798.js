@@ -1,7 +1,7 @@
-System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2"], function (_export, _context) {
+System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Component, Label, Node, tween, UIOpacity, Vec3, AudioManager, StorageManager, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _crd, ccclass, property, TUTORIAL_PAGES, TutorialManager;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Component, Label, Node, tween, UIOpacity, Vec3, AudioManager, AnalyticsManager, StorageManager, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _crd, ccclass, property, TUTORIAL_PAGES, TutorialManager;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -11,6 +11,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2"], fu
 
   function _reportPossibleCrUseOfAudioManager(extras) {
     _reporterNs.report("AudioManager", "../core/AudioManager", _context.meta, extras);
+  }
+
+  function _reportPossibleCrUseOfAnalyticsManager(extras) {
+    _reporterNs.report("AnalyticsManager", "../core/AnalyticsManager", _context.meta, extras);
   }
 
   function _reportPossibleCrUseOfStorageManager(extras) {
@@ -34,7 +38,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2"], fu
     }, function (_unresolved_2) {
       AudioManager = _unresolved_2.AudioManager;
     }, function (_unresolved_3) {
-      StorageManager = _unresolved_3.StorageManager;
+      AnalyticsManager = _unresolved_3.AnalyticsManager;
+    }, function (_unresolved_4) {
+      StorageManager = _unresolved_4.StorageManager;
     }],
     execute: function () {
       _crd = true;
@@ -123,6 +129,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2"], fu
           (_this$audioManager = this.audioManager) == null || _this$audioManager.playButtonClick();
 
           if (this.pageIndex >= TUTORIAL_PAGES.length - 1) {
+            (_crd && AnalyticsManager === void 0 ? (_reportPossibleCrUseOfAnalyticsManager({
+              error: Error()
+            }), AnalyticsManager) : AnalyticsManager).track('tutorial_complete');
             this.complete();
             return;
           }
@@ -135,6 +144,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2"], fu
           var _this$audioManager2;
 
           (_this$audioManager2 = this.audioManager) == null || _this$audioManager2.playButtonClick();
+          (_crd && AnalyticsManager === void 0 ? (_reportPossibleCrUseOfAnalyticsManager({
+            error: Error()
+          }), AnalyticsManager) : AnalyticsManager).track('tutorial_skip', {
+            page: this.pageIndex + 1
+          });
           this.complete();
         }
 

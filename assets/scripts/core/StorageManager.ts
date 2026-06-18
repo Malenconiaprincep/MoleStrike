@@ -6,6 +6,7 @@ const SOUND_ENABLED_KEY = 'mole_strike_sound_enabled';
 const TUTORIAL_COMPLETED_KEY = 'mole_strike_tutorial_completed';
 const DAILY_CHALLENGE_KEY = 'mole_strike_daily_challenge';
 const MEDAL_COUNT_KEY = 'mole_strike_medal_count';
+const PLAY_COUNT_KEY = 'mole_strike_play_count';
 
 /**
  * 本地存档管理。
@@ -76,5 +77,16 @@ export class StorageManager {
         const nextCount = this.getMedalCount() + Math.max(0, Math.floor(count));
         sys.localStorage.setItem(MEDAL_COUNT_KEY, `${nextCount}`);
         return nextCount;
+    }
+
+    public static getPlayCount(): number {
+        const count = Number(sys.localStorage.getItem(PLAY_COUNT_KEY));
+        return Number.isFinite(count) ? Math.max(0, Math.floor(count)) : 0;
+    }
+
+    public static incrementPlayCount(): number {
+        const playCount = this.getPlayCount() + 1;
+        sys.localStorage.setItem(PLAY_COUNT_KEY, `${playCount}`);
+        return playCount;
     }
 }

@@ -117,6 +117,8 @@
       "dependScripts": [
         "521573d7-df85-44d9-81c2-0236b3ae97f5",
         "d74f25be-f2dc-4f03-9545-0469a5e07b7a",
+        "33c3c7ba-3269-44c7-9b81-f0ae678ea4d4",
+        "d2469def-3b3f-40fd-a1bd-2e89609ce92d",
         "e3548882-4a57-4e76-b53d-f8cfb9f9d77e",
         "54bc61c5-a00a-4254-a9d7-e2b7f40a2c88",
         "e90832bb-a1dc-4c37-bf56-8ed8f7eae545",
@@ -319,6 +321,128 @@
   "2ac34fa4-93e0-4a14-9292-b92e3ab34f11": {
     "url": "db://assets/scripts/game/DailyChallengeManager.ts",
     "value": {},
+    "versionCode": 1
+  },
+  "764eaf0c-261d-4ac8-86e3-b8581a736ef1": {
+    "url": "db://assets/scripts/core/AnalyticsManager.ts",
+    "value": {},
+    "versionCode": 1
+  },
+  "cf3b3d85-c4da-4607-b2d8-16086b621932": {
+    "url": "db://assets/resources/textures/ui",
+    "value": {},
+    "versionCode": 1
+  },
+  "0a8519a5-ca91-495f-b0c8-24744d45c388": {
+    "url": "db://assets/resources/textures/ui/btn_pause.png",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "d2bb4fc3-38bb-4a3e-bb46-2a3f461082fc": {
+    "url": "db://assets/resources/textures/ui/btn_primary.png",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "a2725897-f619-474e-962e-b967822f8f50": {
+    "url": "db://assets/resources/textures/ui/btn_secondary.png",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "a5c90a55-1ce1-4d17-a218-f8a93f416d01": {
+    "url": "db://assets/resources/textures/ui/icon_score.png",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "ee753abc-cb0f-4ba2-88e9-ccfac1fd355c": {
+    "url": "db://assets/resources/textures/ui/icon_time.png",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "a5c90a55-1ce1-4d17-a218-f8a93f416d01@6c48a": {
+    "url": "db://assets/resources/textures/ui/icon_score.png@6c48a",
+    "value": {
+      "depends": [
+        "a5c90a55-1ce1-4d17-a218-f8a93f416d01"
+      ]
+    },
+    "versionCode": 1
+  },
+  "5a7a80b6-c7f4-4289-8129-328b8d3272fb": {
+    "url": "db://assets/resources/textures/ui/result_card.png",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "d2bb4fc3-38bb-4a3e-bb46-2a3f461082fc@6c48a": {
+    "url": "db://assets/resources/textures/ui/btn_primary.png@6c48a",
+    "value": {
+      "depends": [
+        "d2bb4fc3-38bb-4a3e-bb46-2a3f461082fc"
+      ]
+    },
+    "versionCode": 1
+  },
+  "ee753abc-cb0f-4ba2-88e9-ccfac1fd355c@6c48a": {
+    "url": "db://assets/resources/textures/ui/icon_time.png@6c48a",
+    "value": {
+      "depends": [
+        "ee753abc-cb0f-4ba2-88e9-ccfac1fd355c"
+      ]
+    },
+    "versionCode": 1
+  },
+  "a2725897-f619-474e-962e-b967822f8f50@6c48a": {
+    "url": "db://assets/resources/textures/ui/btn_secondary.png@6c48a",
+    "value": {
+      "depends": [
+        "a2725897-f619-474e-962e-b967822f8f50"
+      ]
+    },
+    "versionCode": 1
+  },
+  "0a8519a5-ca91-495f-b0c8-24744d45c388@6c48a": {
+    "url": "db://assets/resources/textures/ui/btn_pause.png@6c48a",
+    "value": {
+      "depends": [
+        "0a8519a5-ca91-495f-b0c8-24744d45c388"
+      ]
+    },
+    "versionCode": 1
+  },
+  "03d5ce9a-e954-4a22-9ff6-814f3194a991": {
+    "url": "db://assets/resources/textures/ui/title_sign.png",
+    "value": {
+      "depends": []
+    },
+    "versionCode": 1
+  },
+  "5a7a80b6-c7f4-4289-8129-328b8d3272fb@6c48a": {
+    "url": "db://assets/resources/textures/ui/result_card.png@6c48a",
+    "value": {
+      "depends": [
+        "5a7a80b6-c7f4-4289-8129-328b8d3272fb"
+      ]
+    },
+    "versionCode": 1
+  },
+  "03d5ce9a-e954-4a22-9ff6-814f3194a991@6c48a": {
+    "url": "db://assets/resources/textures/ui/title_sign.png@6c48a",
+    "value": {
+      "depends": [
+        "03d5ce9a-e954-4a22-9ff6-814f3194a991"
+      ]
+    },
     "versionCode": 1
   }
 }

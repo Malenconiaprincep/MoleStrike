@@ -90,12 +90,15 @@ const requiredFiles = [
   'assets/scenes/Main.scene.meta',
   'assets/scripts/game/GameManager.ts',
   'assets/scripts/game/DailyChallengeManager.ts',
+  'assets/scripts/core/AnalyticsManager.ts',
   'assets/scripts/platform/PlatformAdapter.ts',
   'assets/scripts/ui/SafeAreaLayout.ts',
   'assets/resources/audio/bgm_meadow_loop.mp3',
   'assets/resources/textures/gameplay/gameplay_background.jpg',
   'build-templates/wechatgame/game.json',
+  'build-templates/wechatgame/open-data/index.js',
   'build-templates/bytedance-mini-game/game.json',
+  'build-templates/bytedance-mini-game/open-data/index.js',
   'release-assets/STORE_LISTING.md',
   'release-assets/PRIVACY_POLICY_TEMPLATE.md',
   'release-assets/USER_AGREEMENT_TEMPLATE.md',
@@ -114,6 +117,9 @@ for (const platform of ['wechatgame', 'bytedance-mini-game']) {
   const config = readJson(configPath);
   if (config && config.deviceOrientation !== 'portrait') {
     fail(`${configPath} 必须固定为 portrait`);
+  }
+  if (platform === 'wechatgame' && config && config.openDataContext !== 'open-data') {
+    fail(`${configPath} 必须配置 open-data 开放数据域`);
   }
 }
 
@@ -179,6 +185,27 @@ if (!sourceText.includes('profiler.hideStats()')) {
 }
 if (!sourceText.includes('recordRound') || !sourceText.includes('mole_strike_daily_challenge')) {
   fail('缺少每日挑战进度或持久化实现');
+}
+if (!sourceText.includes('setUserCloudStorage') || !sourceText.includes('SubContextView')) {
+  fail('缺少平台云分数写入或开放数据域排行榜视图');
+}
+if (!sourceText.includes("track('game_start'") || !sourceText.includes("track('game_end'")) {
+  fail('缺少游戏开始或结算埋点');
+}
+if (!sourceText.includes('onUnhandledRejection') || !sourceText.includes('runtime_error')) {
+  fail('缺少小游戏运行时错误与未处理 Promise 拒绝采集');
+}
+if (!sourceText.includes('label.enableOutline = true') || !sourceText.includes('label.outlineColor')) {
+  fail('运行时标签缺少统一文字描边');
+}
+if (!sourceText.includes('Artwork_') || !sourceText.includes('artwork.addComponent(Sprite)')) {
+  fail('正式贴图未使用独立子节点，可能与 Graphics 渲染组件冲突');
+}
+if (!sourceText.includes("gameplay_background/texture") || !sourceText.includes('resources.load(ART_PATHS[key], Texture2D')) {
+  fail('正式美术加载路径与 Texture2D 导入类型不一致');
+}
+if (!sourceText.includes("'ResumeButton', '继续游戏'")) {
+  fail('暂停遮罩缺少可交互的继续游戏按钮');
 }
 
 const projectAssets = walk('assets');

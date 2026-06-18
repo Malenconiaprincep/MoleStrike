@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, sys, StorageManager, _crd, BEST_SCORE_KEY, SOUND_ENABLED_KEY, TUTORIAL_COMPLETED_KEY, DAILY_CHALLENGE_KEY, MEDAL_COUNT_KEY;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, sys, StorageManager, _crd, BEST_SCORE_KEY, SOUND_ENABLED_KEY, TUTORIAL_COMPLETED_KEY, DAILY_CHALLENGE_KEY, MEDAL_COUNT_KEY, PLAY_COUNT_KEY;
 
   function _reportPossibleCrUseOfDailyChallengeState(extras) {
     _reporterNs.report("DailyChallengeState", "./GameTypes", _context.meta, extras);
@@ -30,6 +30,7 @@ System.register(["__unresolved_0", "cc"], function (_export, _context) {
       TUTORIAL_COMPLETED_KEY = 'mole_strike_tutorial_completed';
       DAILY_CHALLENGE_KEY = 'mole_strike_daily_challenge';
       MEDAL_COUNT_KEY = 'mole_strike_medal_count';
+      PLAY_COUNT_KEY = 'mole_strike_play_count';
       /**
        * 本地存档管理。
        * 通过 Cocos sys.localStorage 访问平台存储，微信/抖音小游戏会由引擎适配。
@@ -104,6 +105,17 @@ System.register(["__unresolved_0", "cc"], function (_export, _context) {
           const nextCount = this.getMedalCount() + Math.max(0, Math.floor(count));
           sys.localStorage.setItem(MEDAL_COUNT_KEY, `${nextCount}`);
           return nextCount;
+        }
+
+        static getPlayCount() {
+          const count = Number(sys.localStorage.getItem(PLAY_COUNT_KEY));
+          return Number.isFinite(count) ? Math.max(0, Math.floor(count)) : 0;
+        }
+
+        static incrementPlayCount() {
+          const playCount = this.getPlayCount() + 1;
+          sys.localStorage.setItem(PLAY_COUNT_KEY, `${playCount}`);
+          return playCount;
         }
 
       });

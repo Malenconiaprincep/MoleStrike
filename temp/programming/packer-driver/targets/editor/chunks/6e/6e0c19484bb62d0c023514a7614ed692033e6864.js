@@ -1,7 +1,7 @@
-System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11"], function (_export, _context) {
+System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Component, AudioManager, DEFAULT_GAME_SECONDS, GameState, StorageManager, PlatformAdapter, UIManager, TutorialManager, ComboManager, DailyChallengeManager, MoleManager, ScoreManager, TimerManager, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _crd, ccclass, property, GameManager;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Component, AudioManager, AnalyticsManager, DEFAULT_GAME_SECONDS, GameState, StorageManager, PlatformAdapter, UIManager, TutorialManager, ComboManager, DailyChallengeManager, MoleManager, ScoreManager, TimerManager, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _crd, ccclass, property, GameManager;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -11,6 +11,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
   function _reportPossibleCrUseOfAudioManager(extras) {
     _reporterNs.report("AudioManager", "../core/AudioManager", _context.meta, extras);
+  }
+
+  function _reportPossibleCrUseOfAnalyticsManager(extras) {
+    _reporterNs.report("AnalyticsManager", "../core/AnalyticsManager", _context.meta, extras);
   }
 
   function _reportPossibleCrUseOfDEFAULT_GAME_SECONDS(extras) {
@@ -69,26 +73,28 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
     }, function (_unresolved_2) {
       AudioManager = _unresolved_2.AudioManager;
     }, function (_unresolved_3) {
-      DEFAULT_GAME_SECONDS = _unresolved_3.DEFAULT_GAME_SECONDS;
-      GameState = _unresolved_3.GameState;
+      AnalyticsManager = _unresolved_3.AnalyticsManager;
     }, function (_unresolved_4) {
-      StorageManager = _unresolved_4.StorageManager;
+      DEFAULT_GAME_SECONDS = _unresolved_4.DEFAULT_GAME_SECONDS;
+      GameState = _unresolved_4.GameState;
     }, function (_unresolved_5) {
-      PlatformAdapter = _unresolved_5.PlatformAdapter;
+      StorageManager = _unresolved_5.StorageManager;
     }, function (_unresolved_6) {
-      UIManager = _unresolved_6.UIManager;
+      PlatformAdapter = _unresolved_6.PlatformAdapter;
     }, function (_unresolved_7) {
-      TutorialManager = _unresolved_7.TutorialManager;
+      UIManager = _unresolved_7.UIManager;
     }, function (_unresolved_8) {
-      ComboManager = _unresolved_8.ComboManager;
+      TutorialManager = _unresolved_8.TutorialManager;
     }, function (_unresolved_9) {
-      DailyChallengeManager = _unresolved_9.DailyChallengeManager;
+      ComboManager = _unresolved_9.ComboManager;
     }, function (_unresolved_10) {
-      MoleManager = _unresolved_10.MoleManager;
+      DailyChallengeManager = _unresolved_10.DailyChallengeManager;
     }, function (_unresolved_11) {
-      ScoreManager = _unresolved_11.ScoreManager;
+      MoleManager = _unresolved_11.MoleManager;
     }, function (_unresolved_12) {
-      TimerManager = _unresolved_12.TimerManager;
+      ScoreManager = _unresolved_12.ScoreManager;
+    }, function (_unresolved_13) {
+      TimerManager = _unresolved_13.TimerManager;
     }],
     execute: function () {
       _crd = true;
@@ -148,12 +154,30 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.difficultyLevel = 1;
           this.roundPositiveHits = 0;
           this.roundGoldenHits = 0;
+          this.roundBombHits = 0;
+          this.roundMisses = 0;
+          this.roundMaxCombo = 0;
+          this.roundStartedAt = 0;
         }
 
         start() {
+          (_crd && AnalyticsManager === void 0 ? (_reportPossibleCrUseOfAnalyticsManager({
+            error: Error()
+          }), AnalyticsManager) : AnalyticsManager).initialize();
           (_crd && PlatformAdapter === void 0 ? (_reportPossibleCrUseOfPlatformAdapter({
             error: Error()
           }), PlatformAdapter) : PlatformAdapter).setupShareMenu();
+          void (_crd && PlatformAdapter === void 0 ? (_reportPossibleCrUseOfPlatformAdapter({
+            error: Error()
+          }), PlatformAdapter) : PlatformAdapter).login().then(result => {
+            (_crd && AnalyticsManager === void 0 ? (_reportPossibleCrUseOfAnalyticsManager({
+              error: Error()
+            }), AnalyticsManager) : AnalyticsManager).track('login_result', {
+              platform: result.platform,
+              success: result.success,
+              error: result.errorMessage
+            });
+          });
           this.enterHome();
         }
 
@@ -164,18 +188,21 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           (_this$audioManager2 = this.audioManager) == null || _this$audioManager2.ensureBackgroundMusic();
 
           if ((_this$tutorialManager = this.tutorialManager) != null && _this$tutorialManager.shouldShow()) {
-            this.tutorialManager.show(() => this.startGame());
+            (_crd && AnalyticsManager === void 0 ? (_reportPossibleCrUseOfAnalyticsManager({
+              error: Error()
+            }), AnalyticsManager) : AnalyticsManager).track('tutorial_open');
+            this.tutorialManager.show(() => this.startGame('home'));
             return;
           }
 
-          this.startGame();
+          this.startGame('home');
         }
 
         handleReplayButton() {
           var _this$audioManager3;
 
           (_this$audioManager3 = this.audioManager) == null || _this$audioManager3.playButtonClick();
-          this.startGame();
+          this.startGame('replay');
         }
 
         handleHomeButton() {
@@ -204,7 +231,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }
         }
 
-        startGame() {
+        startGame(source = 'home') {
           var _this$scoreManager, _this$comboManager, _this$uiManager, _this$moleManager, _this$onDifficultyCha, _this$timerManager, _this$moleManager2;
 
           this.state = (_crd && GameState === void 0 ? (_reportPossibleCrUseOfGameState({
@@ -213,6 +240,19 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.difficultyLevel = 1;
           this.roundPositiveHits = 0;
           this.roundGoldenHits = 0;
+          this.roundBombHits = 0;
+          this.roundMisses = 0;
+          this.roundMaxCombo = 0;
+          this.roundStartedAt = Date.now();
+          const playCount = (_crd && StorageManager === void 0 ? (_reportPossibleCrUseOfStorageManager({
+            error: Error()
+          }), StorageManager) : StorageManager).incrementPlayCount();
+          (_crd && AnalyticsManager === void 0 ? (_reportPossibleCrUseOfAnalyticsManager({
+            error: Error()
+          }), AnalyticsManager) : AnalyticsManager).track('game_start', {
+            source,
+            play_count: playCount
+          });
           (_this$scoreManager = this.scoreManager) == null || _this$scoreManager.reset();
           (_this$comboManager = this.comboManager) == null || _this$comboManager.reset();
           (_this$uiManager = this.uiManager) == null || _this$uiManager.showGame();
@@ -225,6 +265,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             if (!hit) {
               var _this$comboManager2;
 
+              this.roundMisses += 1;
               (_this$comboManager2 = this.comboManager) == null || _this$comboManager2.breakCombo();
               return;
             }
@@ -239,6 +280,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               this.roundGoldenHits += 1;
             }
 
+            if (score < 0) {
+              this.roundBombHits += 1;
+            }
+
             (_crd && PlatformAdapter === void 0 ? (_reportPossibleCrUseOfPlatformAdapter({
               error: Error()
             }), PlatformAdapter) : PlatformAdapter).vibrateShort(score < 0 ? 'medium' : 'light');
@@ -250,12 +295,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
               (_this$comboManager4 = this.comboManager) == null || _this$comboManager4.breakCombo();
             }
 
+            this.roundMaxCombo = Math.max(this.roundMaxCombo, combo);
             (_this$onHitFeedback = this.onHitFeedback) == null || _this$onHitFeedback.call(this, score, combo, target);
           });
         }
 
         pauseGame() {
-          var _this$timerManager2, _this$moleManager3, _this$uiManager2;
+          var _this$timerManager2, _this$moleManager3, _this$uiManager2, _this$timerManager$ge, _this$timerManager3;
 
           if (this.state !== (_crd && GameState === void 0 ? (_reportPossibleCrUseOfGameState({
             error: Error()
@@ -269,10 +315,15 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           (_this$timerManager2 = this.timerManager) == null || _this$timerManager2.pauseTimer();
           (_this$moleManager3 = this.moleManager) == null || _this$moleManager3.pauseSpawning();
           (_this$uiManager2 = this.uiManager) == null || _this$uiManager2.showPauseMask(true);
+          (_crd && AnalyticsManager === void 0 ? (_reportPossibleCrUseOfAnalyticsManager({
+            error: Error()
+          }), AnalyticsManager) : AnalyticsManager).track('game_pause', {
+            seconds_left: (_this$timerManager$ge = (_this$timerManager3 = this.timerManager) == null ? void 0 : _this$timerManager3.getSecondsLeft()) != null ? _this$timerManager$ge : 0
+          });
         }
 
         resumeGame() {
-          var _this$timerManager3, _this$moleManager4, _this$uiManager3;
+          var _this$timerManager4, _this$moleManager4, _this$uiManager3, _this$timerManager$ge2, _this$timerManager5;
 
           if (this.state !== (_crd && GameState === void 0 ? (_reportPossibleCrUseOfGameState({
             error: Error()
@@ -283,19 +334,24 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           this.state = (_crd && GameState === void 0 ? (_reportPossibleCrUseOfGameState({
             error: Error()
           }), GameState) : GameState).Playing;
-          (_this$timerManager3 = this.timerManager) == null || _this$timerManager3.resumeTimer();
+          (_this$timerManager4 = this.timerManager) == null || _this$timerManager4.resumeTimer();
           (_this$moleManager4 = this.moleManager) == null || _this$moleManager4.resumeSpawning();
           (_this$uiManager3 = this.uiManager) == null || _this$uiManager3.showPauseMask(false);
+          (_crd && AnalyticsManager === void 0 ? (_reportPossibleCrUseOfAnalyticsManager({
+            error: Error()
+          }), AnalyticsManager) : AnalyticsManager).track('game_resume', {
+            seconds_left: (_this$timerManager$ge2 = (_this$timerManager5 = this.timerManager) == null ? void 0 : _this$timerManager5.getSecondsLeft()) != null ? _this$timerManager$ge2 : 0
+          });
         }
 
         enterHome() {
-          var _this$timerManager4, _this$timerManager5, _this$scoreManager3, _this$comboManager5, _this$moleManager5, _this$uiManager4, _this$uiManager5;
+          var _this$timerManager6, _this$timerManager7, _this$scoreManager3, _this$comboManager5, _this$moleManager5, _this$uiManager4, _this$uiManager5;
 
           this.state = (_crd && GameState === void 0 ? (_reportPossibleCrUseOfGameState({
             error: Error()
           }), GameState) : GameState).Home;
-          (_this$timerManager4 = this.timerManager) == null || _this$timerManager4.stopTimer();
-          (_this$timerManager5 = this.timerManager) == null || _this$timerManager5.resetTimer(this.gameSeconds);
+          (_this$timerManager6 = this.timerManager) == null || _this$timerManager6.stopTimer();
+          (_this$timerManager7 = this.timerManager) == null || _this$timerManager7.resetTimer(this.gameSeconds);
           (_this$scoreManager3 = this.scoreManager) == null || _this$scoreManager3.reset();
           (_this$comboManager5 = this.comboManager) == null || _this$comboManager5.reset();
           (_this$moleManager5 = this.moleManager) == null || _this$moleManager5.stopSpawning();
@@ -328,9 +384,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           (_crd && StorageManager === void 0 ? (_reportPossibleCrUseOfStorageManager({
             error: Error()
           }), StorageManager) : StorageManager).saveBestScore(finalScore);
+          const bestScore = (_crd && StorageManager === void 0 ? (_reportPossibleCrUseOfStorageManager({
+            error: Error()
+          }), StorageManager) : StorageManager).getBestScore();
           (_crd && PlatformAdapter === void 0 ? (_reportPossibleCrUseOfPlatformAdapter({
             error: Error()
-          }), PlatformAdapter) : PlatformAdapter).submitScore(finalScore);
+          }), PlatformAdapter) : PlatformAdapter).submitScore(bestScore);
           const challengeUpdate = (_crd && DailyChallengeManager === void 0 ? (_reportPossibleCrUseOfDailyChallengeManager({
             error: Error()
           }), DailyChallengeManager) : DailyChallengeManager).recordRound({
@@ -338,10 +397,22 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             positiveHits: this.roundPositiveHits,
             goldenHits: this.roundGoldenHits
           });
-          (_this$uiManager6 = this.uiManager) == null || _this$uiManager6.showDailyChallenge(challengeUpdate.snapshot, challengeUpdate.justCompleted);
-          (_this$uiManager7 = this.uiManager) == null || _this$uiManager7.showResult(finalScore, (_crd && StorageManager === void 0 ? (_reportPossibleCrUseOfStorageManager({
+          (_crd && AnalyticsManager === void 0 ? (_reportPossibleCrUseOfAnalyticsManager({
             error: Error()
-          }), StorageManager) : StorageManager).getBestScore(), isNewRecord, this.getRatingText(finalScore));
+          }), AnalyticsManager) : AnalyticsManager).track('game_end', {
+            score: finalScore,
+            best_score: bestScore,
+            positive_hits: this.roundPositiveHits,
+            golden_hits: this.roundGoldenHits,
+            bomb_hits: this.roundBombHits,
+            misses: this.roundMisses,
+            max_combo: this.roundMaxCombo,
+            duration_ms: Math.max(0, Date.now() - this.roundStartedAt),
+            challenge_completed: challengeUpdate.snapshot.completed,
+            new_record: isNewRecord
+          });
+          (_this$uiManager6 = this.uiManager) == null || _this$uiManager6.showDailyChallenge(challengeUpdate.snapshot, challengeUpdate.justCompleted);
+          (_this$uiManager7 = this.uiManager) == null || _this$uiManager7.showResult(finalScore, bestScore, isNewRecord, this.getRatingText(finalScore));
         }
 
         updateDifficulty(secondsLeft) {

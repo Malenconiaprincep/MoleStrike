@@ -1,4 +1,4 @@
-import { Graphics, Node, resources, Sprite, SpriteFrame, UITransform } from 'cc';
+import { Graphics, Node, resources, Sprite, SpriteFrame, Texture2D, UITransform } from 'cc';
 
 /**
  * 可由运行时加载的正式美术资源。
@@ -10,16 +10,30 @@ export enum ArtAssetKey {
     GoldenMole = 'GoldenMole',
     BombMole = 'BombMole',
     WoodHole = 'WoodHole',
+    PrimaryButton = 'PrimaryButton',
+    SecondaryButton = 'SecondaryButton',
+    PauseButton = 'PauseButton',
+    TitleSign = 'TitleSign',
+    ResultCard = 'ResultCard',
+    ScoreIcon = 'ScoreIcon',
+    TimeIcon = 'TimeIcon',
 }
 
 type SpriteFrameCallback = (spriteFrame: SpriteFrame | null) => void;
 
 const ART_PATHS: Record<ArtAssetKey, string> = {
-    [ArtAssetKey.GameplayBackground]: 'textures/gameplay/gameplay_background/spriteFrame',
-    [ArtAssetKey.NormalMole]: 'textures/gameplay/mole_normal/spriteFrame',
-    [ArtAssetKey.GoldenMole]: 'textures/gameplay/mole_golden/spriteFrame',
-    [ArtAssetKey.BombMole]: 'textures/gameplay/mole_bomb/spriteFrame',
-    [ArtAssetKey.WoodHole]: 'textures/gameplay/hole_wood/spriteFrame',
+    [ArtAssetKey.GameplayBackground]: 'textures/gameplay/gameplay_background/texture',
+    [ArtAssetKey.NormalMole]: 'textures/gameplay/mole_normal/texture',
+    [ArtAssetKey.GoldenMole]: 'textures/gameplay/mole_golden/texture',
+    [ArtAssetKey.BombMole]: 'textures/gameplay/mole_bomb/texture',
+    [ArtAssetKey.WoodHole]: 'textures/gameplay/hole_wood/texture',
+    [ArtAssetKey.PrimaryButton]: 'textures/ui/btn_primary/texture',
+    [ArtAssetKey.SecondaryButton]: 'textures/ui/btn_secondary/texture',
+    [ArtAssetKey.PauseButton]: 'textures/ui/btn_pause/texture',
+    [ArtAssetKey.TitleSign]: 'textures/ui/title_sign/texture',
+    [ArtAssetKey.ResultCard]: 'textures/ui/result_card/texture',
+    [ArtAssetKey.ScoreIcon]: 'textures/ui/icon_score/texture',
+    [ArtAssetKey.TimeIcon]: 'textures/ui/icon_time/texture',
 };
 
 const GAMEPLAY_ART_KEYS: ArtAssetKey[] = [
@@ -28,6 +42,13 @@ const GAMEPLAY_ART_KEYS: ArtAssetKey[] = [
     ArtAssetKey.GoldenMole,
     ArtAssetKey.BombMole,
     ArtAssetKey.WoodHole,
+    ArtAssetKey.PrimaryButton,
+    ArtAssetKey.SecondaryButton,
+    ArtAssetKey.PauseButton,
+    ArtAssetKey.TitleSign,
+    ArtAssetKey.ResultCard,
+    ArtAssetKey.ScoreIcon,
+    ArtAssetKey.TimeIcon,
 ];
 
 /**
@@ -50,16 +71,27 @@ export class ArtResourceManager {
         width: number,
         height: number,
     ): void {
-        const sprite = node.getComponent(Sprite) ?? node.addComponent(Sprite);
+        const artworkName = `Artwork_${key}`;
+        const artwork = node.getChildByName(artworkName) ?? new Node(artworkName);
+        if (!artwork.parent) {
+            node.addChild(artwork);
+        }
+        artwork.setSiblingIndex(0);
+        artwork.layer = node.layer;
+        artwork.setPosition(0, 0, 0);
+        const artworkTransform = artwork.getComponent(UITransform) ?? artwork.addComponent(UITransform);
+        artworkTransform.setContentSize(width, height);
+        const sprite = artwork.getComponent(Sprite) ?? artwork.addComponent(Sprite);
         sprite.enabled = false;
         sprite.sizeMode = Sprite.SizeMode.CUSTOM;
 
         this.loadSpriteFrame(key, (spriteFrame) => {
-            if (!spriteFrame || !node.isValid) {
+            if (!spriteFrame || !node.isValid || !artwork.isValid) {
                 return;
             }
 
             node.getComponent(UITransform)?.setContentSize(width, height);
+            artwork.layer = node.layer;
             sprite.spriteFrame = spriteFrame;
             sprite.enabled = true;
 
@@ -85,8 +117,10 @@ export class ArtResourceManager {
         }
 
         this.pendingCallbacks.set(key, [callback]);
-        resources.load(ART_PATHS[key], SpriteFrame, (error, spriteFrame) => {
-            if (!error && spriteFrame) {
+        resources.load(ART_PATHS[key], Texture2D, (error, texture) => {
+            const spriteFrame = !error && texture ? new SpriteFrame() : null;
+            if (spriteFrame && texture) {
+                spriteFrame.texture = texture;
                 this.spriteFrames.set(key, spriteFrame);
             }
 

@@ -1,7 +1,7 @@
-System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11"], function (_export, _context) {
+System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__unresolved_3", "__unresolved_4", "__unresolved_5", "__unresolved_6", "__unresolved_7", "__unresolved_8", "__unresolved_9", "__unresolved_10", "__unresolved_11", "__unresolved_12"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, AudioSource, BlockInputEvents, Button, Color, Component, Graphics, Label, Layers, Node, profiler, tween, UITransform, UIOpacity, Vec3, Widget, Tween, view, AudioManager, ArtAssetKey, ArtResourceManager, GameManager, MoleManager, ScoreManager, TimerManager, UIManager, ComboManager, PlatformAdapter, TutorialManager, SafeAreaLayout, _dec, _class, _class2, _descriptor, _crd, ccclass, executeInEditMode, property, DESIGN_WIDTH, DESIGN_HEIGHT, AutoGameBootstrap;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, AudioSource, BlockInputEvents, Button, Color, Component, Graphics, Label, Layers, Node, profiler, SubContextView, tween, UITransform, UIOpacity, Vec3, Widget, Tween, view, AudioManager, AnalyticsManager, ArtAssetKey, ArtResourceManager, GameManager, MoleManager, ScoreManager, TimerManager, UIManager, ComboManager, PlatformAdapter, TutorialManager, SafeAreaLayout, _dec, _class, _class2, _descriptor, _crd, ccclass, executeInEditMode, property, DESIGN_WIDTH, DESIGN_HEIGHT, AutoGameBootstrap;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -11,6 +11,10 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
   function _reportPossibleCrUseOfAudioManager(extras) {
     _reporterNs.report("AudioManager", "../core/AudioManager", _context.meta, extras);
+  }
+
+  function _reportPossibleCrUseOfAnalyticsManager(extras) {
+    _reporterNs.report("AnalyticsManager", "../core/AnalyticsManager", _context.meta, extras);
   }
 
   function _reportPossibleCrUseOfArtAssetKey(extras) {
@@ -75,6 +79,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
       Layers = _cc.Layers;
       Node = _cc.Node;
       profiler = _cc.profiler;
+      SubContextView = _cc.SubContextView;
       tween = _cc.tween;
       UITransform = _cc.UITransform;
       UIOpacity = _cc.UIOpacity;
@@ -85,33 +90,35 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
     }, function (_unresolved_2) {
       AudioManager = _unresolved_2.AudioManager;
     }, function (_unresolved_3) {
-      ArtAssetKey = _unresolved_3.ArtAssetKey;
-      ArtResourceManager = _unresolved_3.ArtResourceManager;
+      AnalyticsManager = _unresolved_3.AnalyticsManager;
     }, function (_unresolved_4) {
-      GameManager = _unresolved_4.GameManager;
+      ArtAssetKey = _unresolved_4.ArtAssetKey;
+      ArtResourceManager = _unresolved_4.ArtResourceManager;
     }, function (_unresolved_5) {
-      MoleManager = _unresolved_5.MoleManager;
+      GameManager = _unresolved_5.GameManager;
     }, function (_unresolved_6) {
-      ScoreManager = _unresolved_6.ScoreManager;
+      MoleManager = _unresolved_6.MoleManager;
     }, function (_unresolved_7) {
-      TimerManager = _unresolved_7.TimerManager;
+      ScoreManager = _unresolved_7.ScoreManager;
     }, function (_unresolved_8) {
-      UIManager = _unresolved_8.UIManager;
+      TimerManager = _unresolved_8.TimerManager;
     }, function (_unresolved_9) {
-      ComboManager = _unresolved_9.ComboManager;
+      UIManager = _unresolved_9.UIManager;
     }, function (_unresolved_10) {
-      PlatformAdapter = _unresolved_10.PlatformAdapter;
+      ComboManager = _unresolved_10.ComboManager;
     }, function (_unresolved_11) {
-      TutorialManager = _unresolved_11.TutorialManager;
+      PlatformAdapter = _unresolved_11.PlatformAdapter;
     }, function (_unresolved_12) {
-      SafeAreaLayout = _unresolved_12.SafeAreaLayout;
+      TutorialManager = _unresolved_12.TutorialManager;
+    }, function (_unresolved_13) {
+      SafeAreaLayout = _unresolved_13.SafeAreaLayout;
     }],
     execute: function () {
       _crd = true;
 
       _cclegacy._RF.push({}, "f4552CedVlBhYPY1ubW6ul8", "AutoGameBootstrap", undefined);
 
-      __checkObsolete__(['_decorator', 'AudioSource', 'BlockInputEvents', 'Button', 'Color', 'Component', 'Graphics', 'Label', 'Layers', 'Node', 'profiler', 'tween', 'UITransform', 'UIOpacity', 'Vec3', 'Widget', 'Tween', 'view']);
+      __checkObsolete__(['_decorator', 'AudioSource', 'BlockInputEvents', 'Button', 'Color', 'Component', 'Graphics', 'Label', 'Layers', 'Node', 'profiler', 'SubContextView', 'tween', 'UITransform', 'UIOpacity', 'Vec3', 'Widget', 'Tween', 'view']);
 
       ({
         ccclass,
@@ -176,10 +183,12 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           const pauseMask = this.createPanel('PauseMask', false);
           const effectsLayer = this.createPanel('EffectsLayer', true);
           const tutorialPanel = this.createPanel('TutorialPanel', false);
+          const leaderboardPanel = this.createPanel('LeaderboardPanel', false);
           this.drawPauseMask(pauseMask);
           this.drawPauseMask(tutorialPanel);
           pauseMask.addComponent(BlockInputEvents);
           tutorialPanel.addComponent(BlockInputEvents);
+          leaderboardPanel.addComponent(BlockInputEvents);
           const managers = new Node('Managers');
           managers.layer = Layers.Enum.UI_2D;
           managers.active = false;
@@ -217,12 +226,20 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           }), GameManager) : GameManager);
           const homeLabels = this.buildHomePanel(homePanel, gameManager, audioManager);
           const gameLabels = this.buildGamePanel(gamePanel, gameManager, moleManager);
-          const resultLabels = this.buildResultPanel(resultPanel, gameManager, audioManager);
+          const leaderboardFallback = this.buildLeaderboardPanel(leaderboardPanel, audioManager);
+          const resultLabels = this.buildResultPanel(resultPanel, gameManager, audioManager, leaderboardPanel, leaderboardFallback);
           this.buildTutorialPanel(tutorialPanel, tutorialManager);
           safeAreaLayout.configure(gameLabels.topSafeNodes, [...gameLabels.bottomSafeNodes, ...resultLabels.bottomSafeNodes]);
           const pauseLabel = this.createLabel('PauseLabel', '已暂停', 48, new Color(255, 255, 255, 255));
           pauseMask.addChild(pauseLabel);
-          pauseLabel.setPosition(0, 0, 0);
+          pauseLabel.setPosition(0, 70, 0);
+          const resumeButton = this.createButton('ResumeButton', '继续游戏', new Color(255, 184, 65, 255), () => {
+            gameManager.handlePauseButton();
+          }, 300, 88, 34, (_crd && ArtAssetKey === void 0 ? (_reportPossibleCrUseOfArtAssetKey({
+            error: Error()
+          }), ArtAssetKey) : ArtAssetKey).PrimaryButton);
+          pauseMask.addChild(resumeButton);
+          resumeButton.setPosition(0, -55, 0);
           scoreManager.scoreLabel = gameLabels.scoreLabel;
           timerManager.timeLabel = gameLabels.timeLabel;
           comboManager.comboLabel = gameLabels.comboLabel;
@@ -232,6 +249,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           uiManager.gamePanel = gamePanel;
           uiManager.resultPanel = resultPanel;
           uiManager.pauseMask = pauseMask;
+          uiManager.leaderboardPanel = leaderboardPanel;
           uiManager.finalScoreLabel = resultLabels.finalScoreLabel;
           uiManager.bestScoreLabel = resultLabels.bestScoreLabel;
           uiManager.ratingLabel = resultLabels.ratingLabel;
@@ -271,16 +289,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           const sign = this.createWoodSign('TitleSign', 610, 170);
           homePanel.addChild(sign);
           sign.setPosition(0, layout.height / 2 - 345, 0);
-          const sun = new Node('Sun');
-          sun.layer = Layers.Enum.UI_2D;
-          sun.addComponent(UITransform).setContentSize(120, 120);
-          const sunGraphics = sun.addComponent(Graphics);
-          sunGraphics.fillColor = new Color(255, 235, 116, 255);
-          sunGraphics.circle(0, 0, 48);
-          sunGraphics.fill();
-          homePanel.addChild(sun);
-          sun.setPosition(-245, 440, 0);
-          const title = this.createLabel('Title', '地鼠突击队', 72, new Color(255, 247, 207, 255), 560, 120);
+          const title = this.createLabel('Title', '地鼠突击队', 66, new Color(255, 247, 207, 255), 560, 120);
           homePanel.addChild(title);
           title.setPosition(0, layout.height / 2 - 360, 0);
           const subtitle = this.createLabel('Subtitle', '60秒打地鼠挑战', 34, new Color(101, 83, 35, 255), 460, 70);
@@ -291,7 +300,9 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           dailyChallenge.setPosition(0, layout.height / 2 - 575, 0);
           const startButton = this.createButton('StartButton', '开始游戏', new Color(255, 184, 65, 255), () => {
             gameManager.handleStartButton();
-          }, 340, 96, 38);
+          }, 360, 104, 38, (_crd && ArtAssetKey === void 0 ? (_reportPossibleCrUseOfArtAssetKey({
+            error: Error()
+          }), ArtAssetKey) : ArtAssetKey).PrimaryButton);
           homePanel.addChild(startButton);
           startButton.setPosition(0, layout.height / 2 - 735, 0);
           const soundButton = this.createSoundButton('SoundButton', audioManager);
@@ -329,6 +340,16 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           timeIcon.setPosition(-100, 0, 0);
           this.drawStarIcon(scoreIcon);
           this.drawClockIcon(timeIcon);
+          (_crd && ArtResourceManager === void 0 ? (_reportPossibleCrUseOfArtResourceManager({
+            error: Error()
+          }), ArtResourceManager) : ArtResourceManager).applySprite(scoreIcon, (_crd && ArtAssetKey === void 0 ? (_reportPossibleCrUseOfArtAssetKey({
+            error: Error()
+          }), ArtAssetKey) : ArtAssetKey).ScoreIcon, 64, 64);
+          (_crd && ArtResourceManager === void 0 ? (_reportPossibleCrUseOfArtResourceManager({
+            error: Error()
+          }), ArtResourceManager) : ArtResourceManager).applySprite(timeIcon, (_crd && ArtAssetKey === void 0 ? (_reportPossibleCrUseOfArtAssetKey({
+            error: Error()
+          }), ArtAssetKey) : ArtAssetKey).TimeIcon, 64, 64);
           const scoreLabelNode = this.createLabel('ScoreLabel', 'Score: 0', 32, new Color(74, 45, 28, 255), 210, 70);
           const timeLabelNode = this.createLabel('TimeLabel', '60', 42, new Color(206, 72, 41, 255), 160, 70);
           topBar.addChild(scoreLabelNode);
@@ -345,11 +366,13 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           fieldFrame.setSiblingIndex(holeRoot.getSiblingIndex());
           fieldFrame.setPosition(0, layout.height / 2 - 705, 0);
           moleManager.holes = this.createHoles(holeRoot);
-          const pauseButton = this.createButton('PauseButton', '暂停', new Color(122, 190, 91, 255), () => {
+          const pauseButton = this.createIconButton('PauseButton', (_crd && ArtAssetKey === void 0 ? (_reportPossibleCrUseOfArtAssetKey({
+            error: Error()
+          }), ArtAssetKey) : ArtAssetKey).PauseButton, () => {
             gameManager.handlePauseButton();
-          }, 220, 78, 30);
+          }, 92);
           gamePanel.addChild(pauseButton);
-          pauseButton.setPosition(0, -layout.height / 2 + 135, 0);
+          pauseButton.setPosition(layout.width / 2 - 78, -layout.height / 2 + 100, 0);
           const comboLabelNode = this.createLabel('ComboLabel', '', 46, new Color(255, 244, 174, 255), 360, 80);
           gamePanel.addChild(comboLabelNode);
           comboLabelNode.active = false;
@@ -367,11 +390,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           };
         }
 
-        buildResultPanel(resultPanel, gameManager, audioManager) {
+        buildResultPanel(resultPanel, gameManager, audioManager, leaderboardPanel, leaderboardFallback) {
           const layout = this.getLayoutSize();
           const card = this.createResultCard();
           resultPanel.addChild(card);
-          card.setPosition(0, layout.height / 2 - 620, 0);
+          card.setPosition(0, layout.height / 2 - 600, 0);
           const title = this.createLabel('ResultTitle', '游戏结束', 68, new Color(91, 52, 31, 255), 520, 120);
           const finalScoreNode = this.createLabel('FinalScoreLabel', '最终得分：0', 42, new Color(74, 45, 28, 255), 520, 90);
           const bestScore = this.createLabel('BestScoreLabel', '历史最高：0', 34, new Color(102, 117, 51, 255), 520, 74);
@@ -384,11 +407,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           resultPanel.addChild(rating);
           resultPanel.addChild(newRecord);
           resultPanel.addChild(challenge);
-          title.setPosition(0, layout.height / 2 - 390, 0);
-          finalScoreNode.setPosition(0, layout.height / 2 - 520, 0);
-          bestScore.setPosition(0, layout.height / 2 - 590, 0);
-          rating.setPosition(0, layout.height / 2 - 655, 0);
-          newRecord.setPosition(0, layout.height / 2 - 460, 0);
+          title.setPosition(0, layout.height / 2 - 420, 0);
+          finalScoreNode.setPosition(0, layout.height / 2 - 540, 0);
+          bestScore.setPosition(0, layout.height / 2 - 610, 0);
+          rating.setPosition(0, layout.height / 2 - 675, 0);
+          newRecord.setPosition(0, layout.height / 2 - 480, 0);
           challenge.setPosition(105, layout.height / 2 - 770, 0);
           newRecord.active = false;
           const resultMole = this.createCuteMolePreview();
@@ -396,25 +419,45 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           resultMole.setPosition(-235, layout.height / 2 - 765, 0);
           const replayButton = this.createButton('ReplayButton', '再来一次', new Color(255, 184, 65, 255), () => {
             gameManager.handleReplayButton();
-          }, 340, 92, 36);
+          }, 350, 96, 36, (_crd && ArtAssetKey === void 0 ? (_reportPossibleCrUseOfArtAssetKey({
+            error: Error()
+          }), ArtAssetKey) : ArtAssetKey).PrimaryButton);
           const homeButton = this.createButton('HomeButton', '返回首页', new Color(122, 190, 91, 255), () => {
             gameManager.handleHomeButton();
-          }, 340, 92, 36);
+          }, 350, 96, 36, (_crd && ArtAssetKey === void 0 ? (_reportPossibleCrUseOfArtAssetKey({
+            error: Error()
+          }), ArtAssetKey) : ArtAssetKey).SecondaryButton);
           const shareButton = this.createButton('ShareButton', '分享战绩', new Color(255, 211, 97, 255), () => {
             var _finalScoreNode$getCo, _finalScoreNode$getCo2;
 
             audioManager.playButtonClick();
             const score = this.parseScoreFromLabel((_finalScoreNode$getCo = (_finalScoreNode$getCo2 = finalScoreNode.getComponent(Label)) == null ? void 0 : _finalScoreNode$getCo2.string) != null ? _finalScoreNode$getCo : '');
-            (_crd && PlatformAdapter === void 0 ? (_reportPossibleCrUseOfPlatformAdapter({
+            (_crd && AnalyticsManager === void 0 ? (_reportPossibleCrUseOfAnalyticsManager({
               error: Error()
-            }), PlatformAdapter) : PlatformAdapter).shareScore(score);
-          }, 250, 78, 30);
+            }), AnalyticsManager) : AnalyticsManager).track('share_result', {
+              score,
+              available: (_crd && PlatformAdapter === void 0 ? (_reportPossibleCrUseOfPlatformAdapter({
+                error: Error()
+              }), PlatformAdapter) : PlatformAdapter).shareScore(score)
+            });
+          }, 250, 78, 30, (_crd && ArtAssetKey === void 0 ? (_reportPossibleCrUseOfArtAssetKey({
+            error: Error()
+          }), ArtAssetKey) : ArtAssetKey).PrimaryButton);
           const leaderboardButton = this.createButton('LeaderboardButton', '排行榜', new Color(141, 205, 255, 255), () => {
             audioManager.playButtonClick();
-            (_crd && PlatformAdapter === void 0 ? (_reportPossibleCrUseOfPlatformAdapter({
+            leaderboardPanel.active = true;
+            const available = (_crd && PlatformAdapter === void 0 ? (_reportPossibleCrUseOfPlatformAdapter({
               error: Error()
             }), PlatformAdapter) : PlatformAdapter).showLeaderboard();
-          }, 250, 78, 30);
+            leaderboardFallback.active = !available;
+            (_crd && AnalyticsManager === void 0 ? (_reportPossibleCrUseOfAnalyticsManager({
+              error: Error()
+            }), AnalyticsManager) : AnalyticsManager).track('leaderboard_open', {
+              available
+            });
+          }, 250, 78, 30, (_crd && ArtAssetKey === void 0 ? (_reportPossibleCrUseOfArtAssetKey({
+            error: Error()
+          }), ArtAssetKey) : ArtAssetKey).SecondaryButton);
           const soundButton = this.createSoundButton('ResultSoundButton', audioManager);
           resultPanel.addChild(replayButton);
           resultPanel.addChild(homeButton);
@@ -434,6 +477,47 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             challengeLabel: challenge.getComponent(Label),
             bottomSafeNodes: [replayButton, homeButton, shareButton, leaderboardButton, soundButton]
           };
+        }
+
+        buildLeaderboardPanel(panel, audioManager) {
+          this.drawPauseMask(panel);
+          const card = new Node('LeaderboardCard');
+          card.layer = Layers.Enum.UI_2D;
+          card.addComponent(UITransform).setContentSize(650, 990);
+          const graphics = card.addComponent(Graphics);
+          graphics.fillColor = new Color(118, 74, 37, 255);
+          graphics.roundRect(-325, -495, 650, 990, 38);
+          graphics.fill();
+          graphics.fillColor = new Color(255, 247, 206, 255);
+          graphics.roundRect(-307, -477, 614, 954, 32);
+          graphics.fill();
+          panel.addChild(card);
+          const title = this.createLabel('LeaderboardTitle', '好友排行榜', 48, new Color(91, 52, 31, 255), 500, 80);
+          panel.addChild(title);
+          title.setPosition(0, 405, 0);
+          const subContextNode = new Node('LeaderboardSubContext');
+          subContextNode.layer = Layers.Enum.UI_2D;
+          subContextNode.addComponent(UITransform).setContentSize(580, 760);
+          const subContextView = subContextNode.addComponent(SubContextView);
+          subContextView.fps = 15;
+          panel.addChild(subContextNode);
+          subContextNode.setPosition(0, -20, 0);
+          const fallback = this.createLabel('LeaderboardFallback', '排行榜需要在微信或抖音开发者工具中查看', 27, new Color(91, 72, 47, 255), 520, 130);
+          panel.addChild(fallback);
+          fallback.setPosition(0, 0, 0);
+          fallback.active = false;
+          const closeButton = this.createButton('LeaderboardCloseButton', '关闭', new Color(122, 190, 91, 255), () => {
+            audioManager.playButtonClick();
+            (_crd && PlatformAdapter === void 0 ? (_reportPossibleCrUseOfPlatformAdapter({
+              error: Error()
+            }), PlatformAdapter) : PlatformAdapter).hideLeaderboard();
+            panel.active = false;
+          }, 240, 76, 30, (_crd && ArtAssetKey === void 0 ? (_reportPossibleCrUseOfArtAssetKey({
+            error: Error()
+          }), ArtAssetKey) : ArtAssetKey).SecondaryButton);
+          panel.addChild(closeButton);
+          closeButton.setPosition(0, -420, 0);
+          return fallback;
         }
 
         buildTutorialPanel(tutorialPanel, tutorialManager) {
@@ -483,10 +567,14 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           progress.setPosition(0, -142, 0);
           const actionButton = this.createButton('TutorialActionButton', '下一步', new Color(255, 184, 65, 255), () => {
             tutorialManager.handleNext();
-          }, 330, 92, 34);
+          }, 330, 92, 34, (_crd && ArtAssetKey === void 0 ? (_reportPossibleCrUseOfArtAssetKey({
+            error: Error()
+          }), ArtAssetKey) : ArtAssetKey).PrimaryButton);
           const skipButton = this.createButton('TutorialSkipButton', '跳过引导', new Color(183, 215, 145, 255), () => {
             tutorialManager.handleSkip();
-          }, 230, 68, 26);
+          }, 230, 68, 26, (_crd && ArtAssetKey === void 0 ? (_reportPossibleCrUseOfArtAssetKey({
+            error: Error()
+          }), ArtAssetKey) : ArtAssetKey).SecondaryButton);
           tutorialPanel.addChild(actionButton);
           tutorialPanel.addChild(skipButton);
           actionButton.setPosition(0, -245, 0);
@@ -570,12 +658,19 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           label.fontSize = fontSize;
           label.lineHeight = fontSize + 8;
           label.color = color;
+          label.useSystemFont = true;
+          label.fontFamily = 'Arial';
+          label.isBold = fontSize >= 30;
+          label.enableOutline = true;
+          label.outlineWidth = fontSize >= 38 ? 3 : 2;
+          const luminance = color.r * 0.299 + color.g * 0.587 + color.b * 0.114;
+          label.outlineColor = luminance >= 170 ? new Color(91, 52, 31, 220) : new Color(255, 249, 219, 210);
           label.horizontalAlign = Label.HorizontalAlign.CENTER;
           label.verticalAlign = Label.VerticalAlign.CENTER;
           return node;
         }
 
-        createButton(name, text, color, onClick, width = 300, height = 88, fontSize = 34) {
+        createButton(name, text, color, onClick, width = 300, height = 88, fontSize = 34, artKey = null) {
           const node = new Node(name);
           node.layer = Layers.Enum.UI_2D;
           node.addComponent(UITransform).setContentSize(width, height);
@@ -604,6 +699,29 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           labelNode.getComponent(UITransform).setContentSize(width, height);
           node.addChild(labelNode);
           labelNode.setPosition(0, 0, 0);
+
+          if (artKey) {
+            (_crd && ArtResourceManager === void 0 ? (_reportPossibleCrUseOfArtResourceManager({
+              error: Error()
+            }), ArtResourceManager) : ArtResourceManager).applySprite(node, artKey, width + 34, height + 24);
+          }
+
+          return node;
+        }
+
+        createIconButton(name, artKey, onClick, size) {
+          const node = new Node(name);
+          node.layer = Layers.Enum.UI_2D;
+          node.addComponent(UITransform).setContentSize(size, size);
+          node.addComponent(Button);
+          this.bindButtonPressAnimation(node);
+          node.on(Node.EventType.TOUCH_END, () => {
+            onClick();
+            node.setScale(Vec3.ONE);
+          });
+          (_crd && ArtResourceManager === void 0 ? (_reportPossibleCrUseOfArtResourceManager({
+            error: Error()
+          }), ArtResourceManager) : ArtResourceManager).applySprite(node, artKey, size, size);
           return node;
         }
 
@@ -613,6 +731,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
 
             audioManager.playButtonClick();
             const enabled = audioManager.toggleSound();
+            (_crd && AnalyticsManager === void 0 ? (_reportPossibleCrUseOfAnalyticsManager({
+              error: Error()
+            }), AnalyticsManager) : AnalyticsManager).track('sound_toggle', {
+              enabled
+            });
             const label = (_soundButton$getChild = soundButton.getChildByName('Label')) == null ? void 0 : _soundButton$getChild.getComponent(Label);
 
             if (label) {
@@ -752,6 +875,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           graphics.moveTo(-width / 2 + 90, -28);
           graphics.quadraticCurveTo(-10, -8, width / 2 - 120, -30);
           graphics.stroke();
+          (_crd && ArtResourceManager === void 0 ? (_reportPossibleCrUseOfArtResourceManager({
+            error: Error()
+          }), ArtResourceManager) : ArtResourceManager).applySprite(node, (_crd && ArtAssetKey === void 0 ? (_reportPossibleCrUseOfArtAssetKey({
+            error: Error()
+          }), ArtAssetKey) : ArtAssetKey).TitleSign, width, 276);
           return node;
         }
 
@@ -785,6 +913,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
           graphics.lineWidth = 6;
           graphics.roundRect(-292, -242, 584, 484, 34);
           graphics.stroke();
+          (_crd && ArtResourceManager === void 0 ? (_reportPossibleCrUseOfArtResourceManager({
+            error: Error()
+          }), ArtResourceManager) : ArtResourceManager).applySprite(node, (_crd && ArtAssetKey === void 0 ? (_reportPossibleCrUseOfArtAssetKey({
+            error: Error()
+          }), ArtAssetKey) : ArtAssetKey).ResultCard, 620, 422);
           return node;
         }
 
@@ -843,7 +976,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
         }
 
         clearGeneratedNodes() {
-          const generatedNames = new Set(['Background', 'HomePanel', 'GamePanel', 'ResultPanel', 'PauseMask', 'EffectsLayer', 'TutorialPanel', 'Managers']);
+          const generatedNames = new Set(['Background', 'HomePanel', 'GamePanel', 'ResultPanel', 'PauseMask', 'EffectsLayer', 'TutorialPanel', 'LeaderboardPanel', 'Managers']);
           const children = [...this.node.children];
 
           for (const child of children) {

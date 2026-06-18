@@ -10,6 +10,7 @@ import {
     Layers,
     Node,
     profiler,
+    SubContextView,
     tween,
     UITransform,
     UIOpacity,
@@ -19,6 +20,7 @@ import {
     view,
 } from 'cc';
 import { AudioManager } from '../core/AudioManager';
+import { AnalyticsManager } from '../core/AnalyticsManager';
 import { ArtAssetKey, ArtResourceManager } from '../core/ArtResourceManager';
 import { GameManager } from './GameManager';
 import { MoleManager } from './MoleManager';
@@ -82,10 +84,12 @@ export class AutoGameBootstrap extends Component {
         const pauseMask = this.createPanel('PauseMask', false);
         const effectsLayer = this.createPanel('EffectsLayer', true);
         const tutorialPanel = this.createPanel('TutorialPanel', false);
+        const leaderboardPanel = this.createPanel('LeaderboardPanel', false);
         this.drawPauseMask(pauseMask);
         this.drawPauseMask(tutorialPanel);
         pauseMask.addComponent(BlockInputEvents);
         tutorialPanel.addComponent(BlockInputEvents);
+        leaderboardPanel.addComponent(BlockInputEvents);
 
         const managers = new Node('Managers');
         managers.layer = Layers.Enum.UI_2D;
@@ -108,7 +112,14 @@ export class AutoGameBootstrap extends Component {
 
         const homeLabels = this.buildHomePanel(homePanel, gameManager, audioManager);
         const gameLabels = this.buildGamePanel(gamePanel, gameManager, moleManager);
-        const resultLabels = this.buildResultPanel(resultPanel, gameManager, audioManager);
+        const leaderboardFallback = this.buildLeaderboardPanel(leaderboardPanel, audioManager);
+        const resultLabels = this.buildResultPanel(
+            resultPanel,
+            gameManager,
+            audioManager,
+            leaderboardPanel,
+            leaderboardFallback,
+        );
         this.buildTutorialPanel(tutorialPanel, tutorialManager);
         safeAreaLayout.configure(gameLabels.topSafeNodes, [
             ...gameLabels.bottomSafeNodes,
@@ -117,7 +128,12 @@ export class AutoGameBootstrap extends Component {
 
         const pauseLabel = this.createLabel('PauseLabel', '已暂停', 48, new Color(255, 255, 255, 255));
         pauseMask.addChild(pauseLabel);
-        pauseLabel.setPosition(0, 0, 0);
+        pauseLabel.setPosition(0, 70, 0);
+        const resumeButton = this.createButton('ResumeButton', '继续游戏', new Color(255, 184, 65, 255), () => {
+            gameManager.handlePauseButton();
+        }, 300, 88, 34, ArtAssetKey.PrimaryButton);
+        pauseMask.addChild(resumeButton);
+        resumeButton.setPosition(0, -55, 0);
 
         scoreManager.scoreLabel = gameLabels.scoreLabel;
         timerManager.timeLabel = gameLabels.timeLabel;
@@ -129,6 +145,7 @@ export class AutoGameBootstrap extends Component {
         uiManager.gamePanel = gamePanel;
         uiManager.resultPanel = resultPanel;
         uiManager.pauseMask = pauseMask;
+        uiManager.leaderboardPanel = leaderboardPanel;
         uiManager.finalScoreLabel = resultLabels.finalScoreLabel;
         uiManager.bestScoreLabel = resultLabels.bestScoreLabel;
         uiManager.ratingLabel = resultLabels.ratingLabel;
@@ -174,17 +191,7 @@ export class AutoGameBootstrap extends Component {
         homePanel.addChild(sign);
         sign.setPosition(0, layout.height / 2 - 345, 0);
 
-        const sun = new Node('Sun');
-        sun.layer = Layers.Enum.UI_2D;
-        sun.addComponent(UITransform).setContentSize(120, 120);
-        const sunGraphics = sun.addComponent(Graphics);
-        sunGraphics.fillColor = new Color(255, 235, 116, 255);
-        sunGraphics.circle(0, 0, 48);
-        sunGraphics.fill();
-        homePanel.addChild(sun);
-        sun.setPosition(-245, 440, 0);
-
-        const title = this.createLabel('Title', '地鼠突击队', 72, new Color(255, 247, 207, 255), 560, 120);
+        const title = this.createLabel('Title', '地鼠突击队', 66, new Color(255, 247, 207, 255), 560, 120);
         homePanel.addChild(title);
         title.setPosition(0, layout.height / 2 - 360, 0);
 
@@ -205,7 +212,7 @@ export class AutoGameBootstrap extends Component {
 
         const startButton = this.createButton('StartButton', '开始游戏', new Color(255, 184, 65, 255), () => {
             gameManager.handleStartButton();
-        }, 340, 96, 38);
+        }, 360, 104, 38, ArtAssetKey.PrimaryButton);
         homePanel.addChild(startButton);
         startButton.setPosition(0, layout.height / 2 - 735, 0);
 
@@ -262,6 +269,8 @@ export class AutoGameBootstrap extends Component {
 
         this.drawStarIcon(scoreIcon);
         this.drawClockIcon(timeIcon);
+        ArtResourceManager.applySprite(scoreIcon, ArtAssetKey.ScoreIcon, 64, 64);
+        ArtResourceManager.applySprite(timeIcon, ArtAssetKey.TimeIcon, 64, 64);
 
         const scoreLabelNode = this.createLabel('ScoreLabel', 'Score: 0', 32, new Color(74, 45, 28, 255), 210, 70);
         const timeLabelNode = this.createLabel('TimeLabel', '60', 42, new Color(206, 72, 41, 255), 160, 70);
@@ -283,11 +292,11 @@ export class AutoGameBootstrap extends Component {
 
         moleManager.holes = this.createHoles(holeRoot);
 
-        const pauseButton = this.createButton('PauseButton', '暂停', new Color(122, 190, 91, 255), () => {
+        const pauseButton = this.createIconButton('PauseButton', ArtAssetKey.PauseButton, () => {
             gameManager.handlePauseButton();
-        }, 220, 78, 30);
+        }, 92);
         gamePanel.addChild(pauseButton);
-        pauseButton.setPosition(0, -layout.height / 2 + 135, 0);
+        pauseButton.setPosition(layout.width / 2 - 78, -layout.height / 2 + 100, 0);
 
         const comboLabelNode = this.createLabel('ComboLabel', '', 46, new Color(255, 244, 174, 255), 360, 80);
         gamePanel.addChild(comboLabelNode);
@@ -312,6 +321,8 @@ export class AutoGameBootstrap extends Component {
         resultPanel: Node,
         gameManager: GameManager,
         audioManager: AudioManager,
+        leaderboardPanel: Node,
+        leaderboardFallback: Node,
     ): {
         finalScoreLabel: Label;
         bestScoreLabel: Label;
@@ -324,7 +335,7 @@ export class AutoGameBootstrap extends Component {
 
         const card = this.createResultCard();
         resultPanel.addChild(card);
-        card.setPosition(0, layout.height / 2 - 620, 0);
+        card.setPosition(0, layout.height / 2 - 600, 0);
 
         const title = this.createLabel('ResultTitle', '游戏结束', 68, new Color(91, 52, 31, 255), 520, 120);
         const finalScoreNode = this.createLabel('FinalScoreLabel', '最终得分：0', 42, new Color(74, 45, 28, 255), 520, 90);
@@ -338,11 +349,11 @@ export class AutoGameBootstrap extends Component {
         resultPanel.addChild(rating);
         resultPanel.addChild(newRecord);
         resultPanel.addChild(challenge);
-        title.setPosition(0, layout.height / 2 - 390, 0);
-        finalScoreNode.setPosition(0, layout.height / 2 - 520, 0);
-        bestScore.setPosition(0, layout.height / 2 - 590, 0);
-        rating.setPosition(0, layout.height / 2 - 655, 0);
-        newRecord.setPosition(0, layout.height / 2 - 460, 0);
+        title.setPosition(0, layout.height / 2 - 420, 0);
+        finalScoreNode.setPosition(0, layout.height / 2 - 540, 0);
+        bestScore.setPosition(0, layout.height / 2 - 610, 0);
+        rating.setPosition(0, layout.height / 2 - 675, 0);
+        newRecord.setPosition(0, layout.height / 2 - 480, 0);
         challenge.setPosition(105, layout.height / 2 - 770, 0);
         newRecord.active = false;
 
@@ -352,19 +363,22 @@ export class AutoGameBootstrap extends Component {
 
         const replayButton = this.createButton('ReplayButton', '再来一次', new Color(255, 184, 65, 255), () => {
             gameManager.handleReplayButton();
-        }, 340, 92, 36);
+        }, 350, 96, 36, ArtAssetKey.PrimaryButton);
         const homeButton = this.createButton('HomeButton', '返回首页', new Color(122, 190, 91, 255), () => {
             gameManager.handleHomeButton();
-        }, 340, 92, 36);
+        }, 350, 96, 36, ArtAssetKey.SecondaryButton);
         const shareButton = this.createButton('ShareButton', '分享战绩', new Color(255, 211, 97, 255), () => {
             audioManager.playButtonClick();
             const score = this.parseScoreFromLabel(finalScoreNode.getComponent(Label)?.string ?? '');
-            PlatformAdapter.shareScore(score);
-        }, 250, 78, 30);
+            AnalyticsManager.track('share_result', { score, available: PlatformAdapter.shareScore(score) });
+        }, 250, 78, 30, ArtAssetKey.PrimaryButton);
         const leaderboardButton = this.createButton('LeaderboardButton', '排行榜', new Color(141, 205, 255, 255), () => {
             audioManager.playButtonClick();
-            PlatformAdapter.showLeaderboard();
-        }, 250, 78, 30);
+            leaderboardPanel.active = true;
+            const available = PlatformAdapter.showLeaderboard();
+            leaderboardFallback.active = !available;
+            AnalyticsManager.track('leaderboard_open', { available });
+        }, 250, 78, 30, ArtAssetKey.SecondaryButton);
         const soundButton = this.createSoundButton('ResultSoundButton', audioManager);
         resultPanel.addChild(replayButton);
         resultPanel.addChild(homeButton);
@@ -385,6 +399,55 @@ export class AutoGameBootstrap extends Component {
             challengeLabel: challenge.getComponent(Label)!,
             bottomSafeNodes: [replayButton, homeButton, shareButton, leaderboardButton, soundButton],
         };
+    }
+
+    private buildLeaderboardPanel(panel: Node, audioManager: AudioManager): Node {
+        this.drawPauseMask(panel);
+
+        const card = new Node('LeaderboardCard');
+        card.layer = Layers.Enum.UI_2D;
+        card.addComponent(UITransform).setContentSize(650, 990);
+        const graphics = card.addComponent(Graphics);
+        graphics.fillColor = new Color(118, 74, 37, 255);
+        graphics.roundRect(-325, -495, 650, 990, 38);
+        graphics.fill();
+        graphics.fillColor = new Color(255, 247, 206, 255);
+        graphics.roundRect(-307, -477, 614, 954, 32);
+        graphics.fill();
+        panel.addChild(card);
+
+        const title = this.createLabel('LeaderboardTitle', '好友排行榜', 48, new Color(91, 52, 31, 255), 500, 80);
+        panel.addChild(title);
+        title.setPosition(0, 405, 0);
+
+        const subContextNode = new Node('LeaderboardSubContext');
+        subContextNode.layer = Layers.Enum.UI_2D;
+        subContextNode.addComponent(UITransform).setContentSize(580, 760);
+        const subContextView = subContextNode.addComponent(SubContextView);
+        subContextView.fps = 15;
+        panel.addChild(subContextNode);
+        subContextNode.setPosition(0, -20, 0);
+
+        const fallback = this.createLabel(
+            'LeaderboardFallback',
+            '排行榜需要在微信或抖音开发者工具中查看',
+            27,
+            new Color(91, 72, 47, 255),
+            520,
+            130,
+        );
+        panel.addChild(fallback);
+        fallback.setPosition(0, 0, 0);
+        fallback.active = false;
+
+        const closeButton = this.createButton('LeaderboardCloseButton', '关闭', new Color(122, 190, 91, 255), () => {
+            audioManager.playButtonClick();
+            PlatformAdapter.hideLeaderboard();
+            panel.active = false;
+        }, 240, 76, 30, ArtAssetKey.SecondaryButton);
+        panel.addChild(closeButton);
+        closeButton.setPosition(0, -420, 0);
+        return fallback;
     }
 
     private buildTutorialPanel(tutorialPanel: Node, tutorialManager: TutorialManager): void {
@@ -435,10 +498,10 @@ export class AutoGameBootstrap extends Component {
 
         const actionButton = this.createButton('TutorialActionButton', '下一步', new Color(255, 184, 65, 255), () => {
             tutorialManager.handleNext();
-        }, 330, 92, 34);
+        }, 330, 92, 34, ArtAssetKey.PrimaryButton);
         const skipButton = this.createButton('TutorialSkipButton', '跳过引导', new Color(183, 215, 145, 255), () => {
             tutorialManager.handleSkip();
-        }, 230, 68, 26);
+        }, 230, 68, 26, ArtAssetKey.SecondaryButton);
         tutorialPanel.addChild(actionButton);
         tutorialPanel.addChild(skipButton);
         actionButton.setPosition(0, -245, 0);
@@ -522,6 +585,15 @@ export class AutoGameBootstrap extends Component {
         label.fontSize = fontSize;
         label.lineHeight = fontSize + 8;
         label.color = color;
+        label.useSystemFont = true;
+        label.fontFamily = 'Arial';
+        label.isBold = fontSize >= 30;
+        label.enableOutline = true;
+        label.outlineWidth = fontSize >= 38 ? 3 : 2;
+        const luminance = color.r * 0.299 + color.g * 0.587 + color.b * 0.114;
+        label.outlineColor = luminance >= 170
+            ? new Color(91, 52, 31, 220)
+            : new Color(255, 249, 219, 210);
         label.horizontalAlign = Label.HorizontalAlign.CENTER;
         label.verticalAlign = Label.VerticalAlign.CENTER;
         return node;
@@ -535,6 +607,7 @@ export class AutoGameBootstrap extends Component {
         width = 300,
         height = 88,
         fontSize = 34,
+        artKey: ArtAssetKey | null = null,
     ): Node {
         const node = new Node(name);
         node.layer = Layers.Enum.UI_2D;
@@ -565,6 +638,23 @@ export class AutoGameBootstrap extends Component {
         labelNode.getComponent(UITransform)!.setContentSize(width, height);
         node.addChild(labelNode);
         labelNode.setPosition(0, 0, 0);
+        if (artKey) {
+            ArtResourceManager.applySprite(node, artKey, width + 34, height + 24);
+        }
+        return node;
+    }
+
+    private createIconButton(name: string, artKey: ArtAssetKey, onClick: () => void, size: number): Node {
+        const node = new Node(name);
+        node.layer = Layers.Enum.UI_2D;
+        node.addComponent(UITransform).setContentSize(size, size);
+        node.addComponent(Button);
+        this.bindButtonPressAnimation(node);
+        node.on(Node.EventType.TOUCH_END, () => {
+            onClick();
+            node.setScale(Vec3.ONE);
+        });
+        ArtResourceManager.applySprite(node, artKey, size, size);
         return node;
     }
 
@@ -576,6 +666,7 @@ export class AutoGameBootstrap extends Component {
             () => {
                 audioManager.playButtonClick();
                 const enabled = audioManager.toggleSound();
+                AnalyticsManager.track('sound_toggle', { enabled });
                 const label = soundButton.getChildByName('Label')?.getComponent(Label);
                 if (label) {
                     label.string = enabled ? '声音：开' : '声音：关';
@@ -726,6 +817,7 @@ export class AutoGameBootstrap extends Component {
         graphics.moveTo(-width / 2 + 90, -28);
         graphics.quadraticCurveTo(-10, -8, width / 2 - 120, -30);
         graphics.stroke();
+        ArtResourceManager.applySprite(node, ArtAssetKey.TitleSign, width, 276);
         return node;
     }
 
@@ -759,6 +851,7 @@ export class AutoGameBootstrap extends Component {
         graphics.lineWidth = 6;
         graphics.roundRect(-292, -242, 584, 484, 34);
         graphics.stroke();
+        ArtResourceManager.applySprite(node, ArtAssetKey.ResultCard, 620, 422);
         return node;
     }
 
@@ -819,6 +912,7 @@ export class AutoGameBootstrap extends Component {
             'PauseMask',
             'EffectsLayer',
             'TutorialPanel',
+            'LeaderboardPanel',
             'Managers',
         ]);
 

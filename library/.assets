@@ -47,7 +47,16 @@
             "resources/textures/gameplay/hole_wood.png",
             "resources/textures/gameplay/mole_bomb.png",
             "resources/textures/gameplay/mole_golden.png",
-            "resources/textures/gameplay/mole_normal.png"
+            "resources/textures/gameplay/mole_normal.png",
+            "scripts/core/AnalyticsManager.ts",
+            "resources/textures/ui",
+            "resources/textures/ui/btn_pause.png",
+            "resources/textures/ui/btn_primary.png",
+            "resources/textures/ui/btn_secondary.png",
+            "resources/textures/ui/icon_score.png",
+            "resources/textures/ui/icon_time.png",
+            "resources/textures/ui/result_card.png",
+            "resources/textures/ui/title_sign.png"
         ]
     }
 }

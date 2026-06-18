@@ -1,7 +1,7 @@
 System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _context) {
   "use strict";
 
-  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Component, Label, Node, tween, Tween, UIOpacity, Vec3, DailyChallengeManager, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _crd, ccclass, property, UIManager;
+  var _reporterNs, _cclegacy, __checkObsolete__, __checkObsoleteInNamespace__, _decorator, Component, Label, Node, tween, Tween, UIOpacity, Vec3, DailyChallengeManager, _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _crd, ccclass, property, UIManager;
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -51,7 +51,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
        * 负责页面显隐和结算文案，不直接修改游戏数据。
        */
 
-      _export("UIManager", UIManager = (_dec = ccclass('UIManager'), _dec2 = property(Node), _dec3 = property(Node), _dec4 = property(Node), _dec5 = property(Node), _dec6 = property(Label), _dec7 = property(Label), _dec8 = property(Label), _dec9 = property(Label), _dec10 = property(Label), _dec11 = property(Label), _dec(_class = (_class2 = class UIManager extends Component {
+      _export("UIManager", UIManager = (_dec = ccclass('UIManager'), _dec2 = property(Node), _dec3 = property(Node), _dec4 = property(Node), _dec5 = property(Node), _dec6 = property(Node), _dec7 = property(Label), _dec8 = property(Label), _dec9 = property(Label), _dec10 = property(Label), _dec11 = property(Label), _dec12 = property(Label), _dec(_class = (_class2 = class UIManager extends Component {
         constructor(...args) {
           super(...args);
 
@@ -63,17 +63,19 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
 
           _initializerDefineProperty(this, "pauseMask", _descriptor4, this);
 
-          _initializerDefineProperty(this, "finalScoreLabel", _descriptor5, this);
+          _initializerDefineProperty(this, "leaderboardPanel", _descriptor5, this);
 
-          _initializerDefineProperty(this, "bestScoreLabel", _descriptor6, this);
+          _initializerDefineProperty(this, "finalScoreLabel", _descriptor6, this);
 
-          _initializerDefineProperty(this, "ratingLabel", _descriptor7, this);
+          _initializerDefineProperty(this, "bestScoreLabel", _descriptor7, this);
 
-          _initializerDefineProperty(this, "newRecordLabel", _descriptor8, this);
+          _initializerDefineProperty(this, "ratingLabel", _descriptor8, this);
 
-          _initializerDefineProperty(this, "dailyChallengeLabel", _descriptor9, this);
+          _initializerDefineProperty(this, "newRecordLabel", _descriptor9, this);
 
-          _initializerDefineProperty(this, "resultChallengeLabel", _descriptor10, this);
+          _initializerDefineProperty(this, "dailyChallengeLabel", _descriptor10, this);
+
+          _initializerDefineProperty(this, "resultChallengeLabel", _descriptor11, this);
         }
 
         showHome() {
@@ -81,6 +83,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           this.setActive(this.gamePanel, false);
           this.setActive(this.resultPanel, false);
           this.setActive(this.pauseMask, false);
+          this.setActive(this.leaderboardPanel, false);
           this.resetPanelTransform(this.homePanel);
         }
 
@@ -89,6 +92,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           this.setActive(this.gamePanel, true);
           this.setActive(this.resultPanel, false);
           this.setActive(this.pauseMask, false);
+          this.setActive(this.leaderboardPanel, false);
           this.resetPanelTransform(this.gamePanel);
         }
 
@@ -97,6 +101,7 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
           this.setActive(this.gamePanel, false);
           this.setActive(this.resultPanel, true);
           this.setActive(this.pauseMask, false);
+          this.setActive(this.leaderboardPanel, false);
 
           if (this.finalScoreLabel) {
             this.finalScoreLabel.string = `最终得分：${finalScore}`;
@@ -246,42 +251,49 @@ System.register(["__unresolved_0", "cc", "__unresolved_1"], function (_export, _
         initializer: function () {
           return null;
         }
-      }), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, "finalScoreLabel", [_dec6], {
+      }), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, "leaderboardPanel", [_dec6], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return null;
         }
-      }), _descriptor6 = _applyDecoratedDescriptor(_class2.prototype, "bestScoreLabel", [_dec7], {
+      }), _descriptor6 = _applyDecoratedDescriptor(_class2.prototype, "finalScoreLabel", [_dec7], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return null;
         }
-      }), _descriptor7 = _applyDecoratedDescriptor(_class2.prototype, "ratingLabel", [_dec8], {
+      }), _descriptor7 = _applyDecoratedDescriptor(_class2.prototype, "bestScoreLabel", [_dec8], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return null;
         }
-      }), _descriptor8 = _applyDecoratedDescriptor(_class2.prototype, "newRecordLabel", [_dec9], {
+      }), _descriptor8 = _applyDecoratedDescriptor(_class2.prototype, "ratingLabel", [_dec9], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return null;
         }
-      }), _descriptor9 = _applyDecoratedDescriptor(_class2.prototype, "dailyChallengeLabel", [_dec10], {
+      }), _descriptor9 = _applyDecoratedDescriptor(_class2.prototype, "newRecordLabel", [_dec10], {
         configurable: true,
         enumerable: true,
         writable: true,
         initializer: function () {
           return null;
         }
-      }), _descriptor10 = _applyDecoratedDescriptor(_class2.prototype, "resultChallengeLabel", [_dec11], {
+      }), _descriptor10 = _applyDecoratedDescriptor(_class2.prototype, "dailyChallengeLabel", [_dec11], {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        initializer: function () {
+          return null;
+        }
+      }), _descriptor11 = _applyDecoratedDescriptor(_class2.prototype, "resultChallengeLabel", [_dec12], {
         configurable: true,
         enumerable: true,
         writable: true,

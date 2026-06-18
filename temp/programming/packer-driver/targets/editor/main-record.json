@@ -997,7 +997,7 @@
       ]
     },
     "cce:/internal/x/prerequisite-imports": {
-      "mTimestamp": 5970.806666,
+      "mTimestamp": 2418412.887,
       "chunkId": "6d8fd2b0177941b032ddc0733af48a561fb60657",
       "imports": [
         {
@@ -1085,7 +1085,7 @@
           }
         },
         {
-          "value": "file:///Users/user/workspace/MoleStrike/assets/scripts/core/ArtResourceManager.ts",
+          "value": "file:///Users/user/workspace/MoleStrike/assets/scripts/core/AnalyticsManager.ts",
           "resolved": "__unresolved_6",
           "loc": {
             "start": {
@@ -1094,217 +1094,231 @@
             },
             "end": {
               "line": 5,
-              "column": 1157
+              "column": 1155
+            }
+          }
+        },
+        {
+          "value": "file:///Users/user/workspace/MoleStrike/assets/scripts/core/ArtResourceManager.ts",
+          "resolved": "__unresolved_7",
+          "loc": {
+            "start": {
+              "line": 5,
+              "column": 1171
+            },
+            "end": {
+              "line": 5,
+              "column": 1254
             }
           }
         },
         {
           "value": "file:///Users/user/workspace/MoleStrike/assets/scripts/core/AudioManager.ts",
-          "resolved": "__unresolved_7",
+          "resolved": "__unresolved_8",
           "loc": {
             "start": {
               "line": 5,
-              "column": 1173
+              "column": 1270
             },
             "end": {
               "line": 5,
-              "column": 1250
+              "column": 1347
             }
           }
         },
         {
           "value": "file:///Users/user/workspace/MoleStrike/assets/scripts/core/GameTypes.ts",
-          "resolved": "__unresolved_8",
+          "resolved": "__unresolved_9",
           "loc": {
             "start": {
               "line": 5,
-              "column": 1266
+              "column": 1363
             },
             "end": {
               "line": 5,
-              "column": 1340
+              "column": 1437
             }
           }
         },
         {
           "value": "file:///Users/user/workspace/MoleStrike/assets/scripts/core/StorageManager.ts",
-          "resolved": "__unresolved_9",
+          "resolved": "__unresolved_10",
           "loc": {
             "start": {
               "line": 5,
-              "column": 1356
+              "column": 1453
             },
             "end": {
               "line": 5,
-              "column": 1435
+              "column": 1532
             }
           }
         },
         {
           "value": "file:///Users/user/workspace/MoleStrike/assets/scripts/game/AutoGameBootstrap.ts",
-          "resolved": "__unresolved_10",
+          "resolved": "__unresolved_11",
           "loc": {
             "start": {
               "line": 5,
-              "column": 1451
+              "column": 1548
             },
             "end": {
               "line": 5,
-              "column": 1533
+              "column": 1630
             }
           }
         },
         {
           "value": "file:///Users/user/workspace/MoleStrike/assets/scripts/game/ComboManager.ts",
-          "resolved": "__unresolved_11",
+          "resolved": "__unresolved_12",
           "loc": {
             "start": {
               "line": 5,
-              "column": 1549
+              "column": 1646
             },
             "end": {
               "line": 5,
-              "column": 1626
+              "column": 1723
             }
           }
         },
         {
           "value": "file:///Users/user/workspace/MoleStrike/assets/scripts/game/DailyChallengeManager.ts",
-          "resolved": "__unresolved_12",
+          "resolved": "__unresolved_13",
           "loc": {
             "start": {
               "line": 5,
-              "column": 1642
+              "column": 1739
             },
             "end": {
               "line": 5,
-              "column": 1728
+              "column": 1825
             }
           }
         },
         {
           "value": "file:///Users/user/workspace/MoleStrike/assets/scripts/game/GameManager.ts",
-          "resolved": "__unresolved_13",
+          "resolved": "__unresolved_14",
           "loc": {
             "start": {
               "line": 5,
-              "column": 1744
+              "column": 1841
             },
             "end": {
               "line": 5,
-              "column": 1820
+              "column": 1917
             }
           }
         },
         {
           "value": "file:///Users/user/workspace/MoleStrike/assets/scripts/game/Mole.ts",
-          "resolved": "__unresolved_14",
+          "resolved": "__unresolved_15",
           "loc": {
             "start": {
               "line": 5,
-              "column": 1836
+              "column": 1933
             },
             "end": {
               "line": 5,
-              "column": 1905
+              "column": 2002
             }
           }
         },
         {
           "value": "file:///Users/user/workspace/MoleStrike/assets/scripts/game/MoleManager.ts",
-          "resolved": "__unresolved_15",
+          "resolved": "__unresolved_16",
           "loc": {
             "start": {
               "line": 5,
-              "column": 1921
+              "column": 2018
             },
             "end": {
               "line": 5,
-              "column": 1997
+              "column": 2094
             }
           }
         },
         {
           "value": "file:///Users/user/workspace/MoleStrike/assets/scripts/game/ScoreManager.ts",
-          "resolved": "__unresolved_16",
+          "resolved": "__unresolved_17",
           "loc": {
             "start": {
               "line": 5,
-              "column": 2013
+              "column": 2110
             },
             "end": {
               "line": 5,
-              "column": 2090
+              "column": 2187
             }
           }
         },
         {
           "value": "file:///Users/user/workspace/MoleStrike/assets/scripts/game/TimerManager.ts",
-          "resolved": "__unresolved_17",
+          "resolved": "__unresolved_18",
           "loc": {
             "start": {
               "line": 5,
-              "column": 2106
+              "column": 2203
             },
             "end": {
               "line": 5,
-              "column": 2183
+              "column": 2280
             }
           }
         },
         {
           "value": "file:///Users/user/workspace/MoleStrike/assets/scripts/platform/PlatformAdapter.ts",
-          "resolved": "__unresolved_18",
+          "resolved": "__unresolved_19",
           "loc": {
             "start": {
               "line": 5,
-              "column": 2199
+              "column": 2296
             },
             "end": {
               "line": 5,
-              "column": 2283
+              "column": 2380
             }
           }
         },
         {
           "value": "file:///Users/user/workspace/MoleStrike/assets/scripts/ui/SafeAreaLayout.ts",
-          "resolved": "__unresolved_19",
+          "resolved": "__unresolved_20",
           "loc": {
             "start": {
               "line": 5,
-              "column": 2299
+              "column": 2396
             },
             "end": {
               "line": 5,
-              "column": 2376
+              "column": 2473
             }
           }
         },
         {
           "value": "file:///Users/user/workspace/MoleStrike/assets/scripts/ui/TutorialManager.ts",
-          "resolved": "__unresolved_20",
+          "resolved": "__unresolved_21",
           "loc": {
             "start": {
               "line": 5,
-              "column": 2392
+              "column": 2489
             },
             "end": {
               "line": 5,
-              "column": 2470
+              "column": 2567
             }
           }
         },
         {
           "value": "file:///Users/user/workspace/MoleStrike/assets/scripts/ui/UIManager.ts",
-          "resolved": "__unresolved_21",
+          "resolved": "__unresolved_22",
           "loc": {
             "start": {
               "line": 5,
-              "column": 2486
+              "column": 2583
             },
             "end": {
               "line": 5,
-              "column": 2558
+              "column": 2655
             }
           }
         }
@@ -1350,6 +1364,13 @@
           "resolved": {
             "type": "module",
             "url": "file:///Applications/Cocos/Creator/3.8.8/CocosCreator.app/Contents/Resources/resources/3d/engine/editor/assets/tools/debug-view-runtime-control.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///Users/user/workspace/MoleStrike/assets/scripts/core/AnalyticsManager.ts"
           },
           "messages": []
         },
@@ -2137,7 +2158,7 @@
     },
     "file:///Users/user/workspace/MoleStrike/assets/scripts/game/GameManager.ts": {
       "mTimestamp": {
-        "mtime": 1781755086624.2312,
+        "mtime": 1781755713084.5981,
         "uuid": "7fb0ce1a-d40b-4b3d-92ce-2eed9aa6c1bf"
       },
       "chunkId": "6e0c19484bb62d0c023514a7614ed692033e6864",
@@ -2180,133 +2201,133 @@
           }
         },
         {
-          "value": "../core/GameTypes",
+          "value": "../core/AnalyticsManager",
           "resolved": "__unresolved_2",
           "loc": {
             "start": {
               "line": 3,
-              "column": 48
+              "column": 33
             },
             "end": {
               "line": 3,
+              "column": 59
+            }
+          }
+        },
+        {
+          "value": "../core/GameTypes",
+          "resolved": "__unresolved_3",
+          "loc": {
+            "start": {
+              "line": 4,
+              "column": 48
+            },
+            "end": {
+              "line": 4,
               "column": 67
             }
           }
         },
         {
           "value": "../core/StorageManager",
-          "resolved": "__unresolved_3",
+          "resolved": "__unresolved_4",
           "loc": {
             "start": {
-              "line": 4,
+              "line": 5,
               "column": 31
             },
             "end": {
-              "line": 4,
+              "line": 5,
               "column": 55
             }
           }
         },
         {
           "value": "../platform/PlatformAdapter",
-          "resolved": "__unresolved_4",
+          "resolved": "__unresolved_5",
           "loc": {
             "start": {
-              "line": 5,
+              "line": 6,
               "column": 32
             },
             "end": {
-              "line": 5,
+              "line": 6,
               "column": 61
             }
           }
         },
         {
           "value": "../ui/UIManager",
-          "resolved": "__unresolved_5",
+          "resolved": "__unresolved_6",
           "loc": {
             "start": {
-              "line": 6,
+              "line": 7,
               "column": 26
             },
             "end": {
-              "line": 6,
+              "line": 7,
               "column": 43
             }
           }
         },
         {
           "value": "../ui/TutorialManager",
-          "resolved": "__unresolved_6",
+          "resolved": "__unresolved_7",
           "loc": {
             "start": {
-              "line": 7,
+              "line": 8,
               "column": 32
             },
             "end": {
-              "line": 7,
+              "line": 8,
               "column": 55
             }
           }
         },
         {
           "value": "./ComboManager",
-          "resolved": "__unresolved_7",
+          "resolved": "__unresolved_8",
           "loc": {
             "start": {
-              "line": 8,
+              "line": 9,
               "column": 29
             },
             "end": {
-              "line": 8,
+              "line": 9,
               "column": 45
             }
           }
         },
         {
           "value": "./DailyChallengeManager",
-          "resolved": "__unresolved_8",
+          "resolved": "__unresolved_9",
           "loc": {
             "start": {
-              "line": 9,
+              "line": 10,
               "column": 38
             },
             "end": {
-              "line": 9,
+              "line": 10,
               "column": 63
             }
           }
         },
         {
           "value": "./MoleManager",
-          "resolved": "__unresolved_9",
+          "resolved": "__unresolved_10",
           "loc": {
             "start": {
-              "line": 10,
+              "line": 11,
               "column": 28
             },
             "end": {
-              "line": 10,
+              "line": 11,
               "column": 43
             }
           }
         },
         {
           "value": "./ScoreManager",
-          "resolved": "__unresolved_10",
-          "loc": {
-            "start": {
-              "line": 11,
-              "column": 29
-            },
-            "end": {
-              "line": 11,
-              "column": 45
-            }
-          }
-        },
-        {
-          "value": "./TimerManager",
           "resolved": "__unresolved_11",
           "loc": {
             "start": {
@@ -2315,6 +2336,20 @@
             },
             "end": {
               "line": 12,
+              "column": 45
+            }
+          }
+        },
+        {
+          "value": "./TimerManager",
+          "resolved": "__unresolved_12",
+          "loc": {
+            "start": {
+              "line": 13,
+              "column": 29
+            },
+            "end": {
+              "line": 13,
               "column": 45
             }
           }
@@ -2354,6 +2389,13 @@
           "resolved": {
             "type": "module",
             "url": "file:///Users/user/workspace/MoleStrike/assets/scripts/core/AudioManager.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///Users/user/workspace/MoleStrike/assets/scripts/core/AnalyticsManager.ts"
           },
           "messages": []
         },
@@ -2515,7 +2557,7 @@
     },
     "file:///Users/user/workspace/MoleStrike/assets/scripts/game/MoleManager.ts": {
       "mTimestamp": {
-        "mtime": 1781748511572.6165,
+        "mtime": 1781756042110.1445,
         "uuid": "6a086a09-3145-4a9d-a1a5-7a19622f1db4"
       },
       "chunkId": "29fdef50c80fd46eb2347a38c50b8ff3664fdb2a",
@@ -2766,7 +2808,7 @@
     },
     "file:///Users/user/workspace/MoleStrike/assets/scripts/ui/UIManager.ts": {
       "mTimestamp": {
-        "mtime": 1781755086703.7756,
+        "mtime": 1781755339904.239,
         "uuid": "d74f25be-f2dc-4f03-9545-0469a5e07b7a"
       },
       "chunkId": "f059c411196a8347dbf3cfa054b19e28c64ff0bd",
@@ -2857,7 +2899,7 @@
     },
     "file:///Users/user/workspace/MoleStrike/assets/scripts/game/AutoGameBootstrap.ts": {
       "mTimestamp": {
-        "mtime": 1781755117120.539,
+        "mtime": 1781756846325.7654,
         "uuid": "f455209e-7559-4185-83d8-d6e6d6eae97c"
       },
       "chunkId": "21c79389d95546e148b07a524c4336eb8aa583b7",
@@ -2876,11 +2918,11 @@
           "value": "cc",
           "loc": {
             "start": {
-              "line": 20,
+              "line": 21,
               "column": 7
             },
             "end": {
-              "line": 20,
+              "line": 21,
               "column": 11
             }
           }
@@ -2890,151 +2932,165 @@
           "resolved": "__unresolved_1",
           "loc": {
             "start": {
-              "line": 21,
+              "line": 22,
               "column": 29
             },
             "end": {
-              "line": 21,
+              "line": 22,
               "column": 51
             }
           }
         },
         {
-          "value": "../core/ArtResourceManager",
+          "value": "../core/AnalyticsManager",
           "resolved": "__unresolved_2",
           "loc": {
             "start": {
-              "line": 22,
+              "line": 23,
+              "column": 33
+            },
+            "end": {
+              "line": 23,
+              "column": 59
+            }
+          }
+        },
+        {
+          "value": "../core/ArtResourceManager",
+          "resolved": "__unresolved_3",
+          "loc": {
+            "start": {
+              "line": 24,
               "column": 48
             },
             "end": {
-              "line": 22,
+              "line": 24,
               "column": 76
             }
           }
         },
         {
           "value": "./GameManager",
-          "resolved": "__unresolved_3",
+          "resolved": "__unresolved_4",
           "loc": {
             "start": {
-              "line": 23,
+              "line": 25,
               "column": 28
             },
             "end": {
-              "line": 23,
+              "line": 25,
               "column": 43
             }
           }
         },
         {
           "value": "./MoleManager",
-          "resolved": "__unresolved_4",
+          "resolved": "__unresolved_5",
           "loc": {
             "start": {
-              "line": 24,
+              "line": 26,
               "column": 28
             },
             "end": {
-              "line": 24,
+              "line": 26,
               "column": 43
             }
           }
         },
         {
           "value": "./ScoreManager",
-          "resolved": "__unresolved_5",
+          "resolved": "__unresolved_6",
           "loc": {
             "start": {
-              "line": 25,
+              "line": 27,
               "column": 29
             },
             "end": {
-              "line": 25,
+              "line": 27,
               "column": 45
             }
           }
         },
         {
           "value": "./TimerManager",
-          "resolved": "__unresolved_6",
+          "resolved": "__unresolved_7",
           "loc": {
             "start": {
-              "line": 26,
+              "line": 28,
               "column": 29
             },
             "end": {
-              "line": 26,
+              "line": 28,
               "column": 45
             }
           }
         },
         {
           "value": "../ui/UIManager",
-          "resolved": "__unresolved_7",
+          "resolved": "__unresolved_8",
           "loc": {
             "start": {
-              "line": 27,
+              "line": 29,
               "column": 26
             },
             "end": {
-              "line": 27,
+              "line": 29,
               "column": 43
             }
           }
         },
         {
           "value": "./ComboManager",
-          "resolved": "__unresolved_8",
+          "resolved": "__unresolved_9",
           "loc": {
             "start": {
-              "line": 28,
+              "line": 30,
               "column": 29
             },
             "end": {
-              "line": 28,
+              "line": 30,
               "column": 45
             }
           }
         },
         {
           "value": "../platform/PlatformAdapter",
-          "resolved": "__unresolved_9",
+          "resolved": "__unresolved_10",
           "loc": {
             "start": {
-              "line": 29,
+              "line": 31,
               "column": 32
             },
             "end": {
-              "line": 29,
+              "line": 31,
               "column": 61
             }
           }
         },
         {
           "value": "../ui/TutorialManager",
-          "resolved": "__unresolved_10",
+          "resolved": "__unresolved_11",
           "loc": {
             "start": {
-              "line": 30,
+              "line": 32,
               "column": 32
             },
             "end": {
-              "line": 30,
+              "line": 32,
               "column": 55
             }
           }
         },
         {
           "value": "../ui/SafeAreaLayout",
-          "resolved": "__unresolved_11",
+          "resolved": "__unresolved_12",
           "loc": {
             "start": {
-              "line": 31,
+              "line": 33,
               "column": 31
             },
             "end": {
-              "line": 31,
+              "line": 33,
               "column": 53
             }
           }
@@ -3074,6 +3130,13 @@
           "resolved": {
             "type": "module",
             "url": "file:///Users/user/workspace/MoleStrike/assets/scripts/core/AudioManager.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///Users/user/workspace/MoleStrike/assets/scripts/core/AnalyticsManager.ts"
           },
           "messages": []
         },
@@ -3151,7 +3214,7 @@
     },
     "file:///Users/user/workspace/MoleStrike/assets/scripts/core/StorageManager.ts": {
       "mTimestamp": {
-        "mtime": 1781755086378.5457,
+        "mtime": 1781755712868.3137,
         "uuid": "0db8c77b-ca9b-49b1-a2f8-b1ba487e4b48"
       },
       "chunkId": "350384e1eb15521fa71956fe8fc55584247c74fd",
@@ -3266,7 +3329,7 @@
     },
     "file:///Users/user/workspace/MoleStrike/assets/scripts/platform/PlatformAdapter.ts": {
       "mTimestamp": {
-        "mtime": 1781691385426.891,
+        "mtime": 1781755763159.608,
         "uuid": "67ffeb66-11b5-4c3e-bf76-246f0f52d3a7"
       },
       "chunkId": "f120b030e393e0e271026e044bf413c034d782ea",
@@ -3318,7 +3381,7 @@
     },
     "file:///Users/user/workspace/MoleStrike/assets/scripts/core/ArtResourceManager.ts": {
       "mTimestamp": {
-        "mtime": 1781748667826.5305,
+        "mtime": 1781756846243.1006,
         "uuid": "d7b36ab9-e20f-4fcb-8f82-4ceff407b673"
       },
       "chunkId": "6e97f8845ce997b01a3d5d94107522059cd3d113",
@@ -3334,11 +3397,11 @@
           "loc": {
             "start": {
               "line": 1,
-              "column": 76
+              "column": 87
             },
             "end": {
               "line": 1,
-              "column": 80
+              "column": 91
             }
           }
         }
@@ -3422,7 +3485,7 @@
     },
     "file:///Users/user/workspace/MoleStrike/assets/scripts/ui/TutorialManager.ts": {
       "mTimestamp": {
-        "mtime": 1781749238868.8801,
+        "mtime": 1781755713158.9287,
         "uuid": "33c3c7ba-3269-44c7-9b81-f0ae678ea4d4"
       },
       "chunkId": "55a5ba94681be4596e987849209f8c1f252db798",
@@ -3465,15 +3528,29 @@
           }
         },
         {
-          "value": "../core/StorageManager",
+          "value": "../core/AnalyticsManager",
           "resolved": "__unresolved_2",
           "loc": {
             "start": {
               "line": 3,
-              "column": 31
+              "column": 33
             },
             "end": {
               "line": 3,
+              "column": 59
+            }
+          }
+        },
+        {
+          "value": "../core/StorageManager",
+          "resolved": "__unresolved_3",
+          "loc": {
+            "start": {
+              "line": 4,
+              "column": 31
+            },
+            "end": {
+              "line": 4,
               "column": 55
             }
           }
@@ -3513,6 +3590,13 @@
           "resolved": {
             "type": "module",
             "url": "file:///Users/user/workspace/MoleStrike/assets/scripts/core/AudioManager.ts"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///Users/user/workspace/MoleStrike/assets/scripts/core/AnalyticsManager.ts"
           },
           "messages": []
         },
@@ -3574,6 +3658,90 @@
           "resolved": {
             "type": "module",
             "url": "file:///Users/user/workspace/MoleStrike/assets/scripts/core/StorageManager.ts"
+          },
+          "messages": []
+        }
+      ]
+    },
+    "file:///Users/user/workspace/MoleStrike/assets/scripts/core/AnalyticsManager.ts": {
+      "mTimestamp": {
+        "mtime": 1781755712939.61,
+        "uuid": "764eaf0c-261d-4ac8-86e3-b8581a736ef1"
+      },
+      "chunkId": "888a57ff411b9cfb2e4e3c634fde240e7973ec2f",
+      "imports": [
+        {
+          "value": "cce:/internal/code-quality/cr.mjs",
+          "resolved": "__unresolved_0"
+        },
+        {
+          "value": "cc"
+        },
+        {
+          "value": "cc"
+        },
+        {
+          "value": "cc",
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 20
+            },
+            "end": {
+              "line": 1,
+              "column": 24
+            }
+          }
+        },
+        {
+          "value": "../platform/PlatformAdapter",
+          "resolved": "__unresolved_1",
+          "loc": {
+            "start": {
+              "line": 2,
+              "column": 32
+            },
+            "end": {
+              "line": 2,
+              "column": 61
+            }
+          }
+        }
+      ],
+      "type": "esm",
+      "resolutions": [
+        {
+          "resolved": {
+            "type": "module",
+            "url": "cce:/internal/code-quality/cr.mjs"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "cce:/internal/x/cc"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "cce:/internal/x/cc"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "cce:/internal/x/cc"
+          },
+          "messages": []
+        },
+        {
+          "resolved": {
+            "type": "module",
+            "url": "file:///Users/user/workspace/MoleStrike/assets/scripts/platform/PlatformAdapter.ts"
           },
           "messages": []
         }

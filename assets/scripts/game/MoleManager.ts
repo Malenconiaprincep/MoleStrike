@@ -118,6 +118,9 @@ export class MoleManager extends Component {
         moleNode.active = true;
         moleNode.setPosition(Vec3.ZERO);
         moleNode.layer = hole.layer;
+        for (const child of moleNode.children) {
+            child.layer = hole.layer;
+        }
 
         const mole = moleNode.getComponent(Mole);
         if (!mole) {

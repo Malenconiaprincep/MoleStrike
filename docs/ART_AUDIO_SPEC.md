@@ -16,6 +16,15 @@ assets/resources/textures/gameplay/
 ├── mole_normal.png
 ├── mole_golden.png
 └── mole_bomb.png
+
+assets/resources/textures/ui/
+├── btn_primary.png
+├── btn_secondary.png
+├── btn_pause.png
+├── title_sign.png
+├── result_card.png
+├── icon_score.png
+└── icon_time.png
 ```
 
 - 背景为 `750 x 1334` JPG，约 143 KB。
@@ -111,6 +120,8 @@ assets/resources/audio/
 - 后续可增加独立音乐音量滑杆，目前“声音”开关统一控制音乐和音效。
 - 当前背景音乐为项目内程序生成的原创循环，96 kbps 单声道，音乐音量设为 `0.22`，给命中音效保留空间。
 
-## 后续 UI 美术
+## UI 美术接入
 
-按钮、分数图标和时间图标目前使用清晰稳定的程序绘制版本。正式资源替换时应继续通过 `ArtResourceManager` 接入，并保留按下态、禁用态和降级画面。
+- 首页标题牌、主次按钮、暂停按钮、结算卡片和 HUD 图标已替换为正式透明 PNG。
+- 所有 UI 图片不包含文字，中文由 Cocos `Label` 渲染，便于后续调整和本地化。
+- `ArtResourceManager` 统一负责预加载、缓存和降级；贴图加载失败时仍保留程序绘制的可用界面。

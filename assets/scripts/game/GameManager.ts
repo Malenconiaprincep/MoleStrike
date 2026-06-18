@@ -1,5 +1,6 @@
 import { _decorator, Component, Node } from 'cc';
 import { AudioManager } from '../core/AudioManager';
+import { AnalyticsManager } from '../core/AnalyticsManager';
 import { DEFAULT_GAME_SECONDS, GameState } from '../core/GameTypes';
 import { StorageManager } from '../core/StorageManager';
 import { PlatformAdapter } from '../platform/PlatformAdapter';
@@ -50,9 +51,21 @@ export class GameManager extends Component {
     private difficultyLevel = 1;
     private roundPositiveHits = 0;
     private roundGoldenHits = 0;
+    private roundBombHits = 0;
+    private roundMisses = 0;
+    private roundMaxCombo = 0;
+    private roundStartedAt = 0;
 
     protected start(): void {
+        AnalyticsManager.initialize();
         PlatformAdapter.setupShareMenu();
+        void PlatformAdapter.login().then((result) => {
+            AnalyticsManager.track('login_result', {
+                platform: result.platform,
+                success: result.success,
+                error: result.errorMessage,
+            });
+        });
         this.enterHome();
     }
 
@@ -60,15 +73,16 @@ export class GameManager extends Component {
         this.audioManager?.playButtonClick();
         this.audioManager?.ensureBackgroundMusic();
         if (this.tutorialManager?.shouldShow()) {
-            this.tutorialManager.show(() => this.startGame());
+            AnalyticsManager.track('tutorial_open');
+            this.tutorialManager.show(() => this.startGame('home'));
             return;
         }
-        this.startGame();
+        this.startGame('home');
     }
 
     public handleReplayButton(): void {
         this.audioManager?.playButtonClick();
-        this.startGame();
+        this.startGame('replay');
     }
 
     public handleHomeButton(): void {
@@ -89,11 +103,17 @@ export class GameManager extends Component {
         }
     }
 
-    public startGame(): void {
+    public startGame(source: 'home' | 'replay' = 'home'): void {
         this.state = GameState.Playing;
         this.difficultyLevel = 1;
         this.roundPositiveHits = 0;
         this.roundGoldenHits = 0;
+        this.roundBombHits = 0;
+        this.roundMisses = 0;
+        this.roundMaxCombo = 0;
+        this.roundStartedAt = Date.now();
+        const playCount = StorageManager.incrementPlayCount();
+        AnalyticsManager.track('game_start', { source, play_count: playCount });
         this.scoreManager?.reset();
         this.comboManager?.reset();
         this.uiManager?.showGame();
@@ -108,6 +128,7 @@ export class GameManager extends Component {
 
         this.moleManager?.startSpawning((score, hit, target) => {
             if (!hit) {
+                this.roundMisses += 1;
                 this.comboManager?.breakCombo();
                 return;
             }
@@ -119,11 +140,15 @@ export class GameManager extends Component {
             if (score >= 5) {
                 this.roundGoldenHits += 1;
             }
+            if (score < 0) {
+                this.roundBombHits += 1;
+            }
             PlatformAdapter.vibrateShort(score < 0 ? 'medium' : 'light');
             const combo = score > 0 ? this.comboManager?.addCombo() ?? 0 : 0;
             if (score < 0) {
                 this.comboManager?.breakCombo();
             }
+            this.roundMaxCombo = Math.max(this.roundMaxCombo, combo);
             this.onHitFeedback?.(score, combo, target);
         });
     }
@@ -137,6 +162,7 @@ export class GameManager extends Component {
         this.timerManager?.pauseTimer();
         this.moleManager?.pauseSpawning();
         this.uiManager?.showPauseMask(true);
+        AnalyticsManager.track('game_pause', { seconds_left: this.timerManager?.getSecondsLeft() ?? 0 });
     }
 
     public resumeGame(): void {
@@ -148,6 +174,7 @@ export class GameManager extends Component {
         this.timerManager?.resumeTimer();
         this.moleManager?.resumeSpawning();
         this.uiManager?.showPauseMask(false);
+        AnalyticsManager.track('game_resume', { seconds_left: this.timerManager?.getSecondsLeft() ?? 0 });
     }
 
     private enterHome(): void {
@@ -174,14 +201,27 @@ export class GameManager extends Component {
         const previousBestScore = StorageManager.getBestScore();
         const isNewRecord = finalScore > previousBestScore;
         StorageManager.saveBestScore(finalScore);
-        PlatformAdapter.submitScore(finalScore);
+        const bestScore = StorageManager.getBestScore();
+        PlatformAdapter.submitScore(bestScore);
         const challengeUpdate = DailyChallengeManager.recordRound({
             score: finalScore,
             positiveHits: this.roundPositiveHits,
             goldenHits: this.roundGoldenHits,
         });
+        AnalyticsManager.track('game_end', {
+            score: finalScore,
+            best_score: bestScore,
+            positive_hits: this.roundPositiveHits,
+            golden_hits: this.roundGoldenHits,
+            bomb_hits: this.roundBombHits,
+            misses: this.roundMisses,
+            max_combo: this.roundMaxCombo,
+            duration_ms: Math.max(0, Date.now() - this.roundStartedAt),
+            challenge_completed: challengeUpdate.snapshot.completed,
+            new_record: isNewRecord,
+        });
         this.uiManager?.showDailyChallenge(challengeUpdate.snapshot, challengeUpdate.justCompleted);
-        this.uiManager?.showResult(finalScore, StorageManager.getBestScore(), isNewRecord, this.getRatingText(finalScore));
+        this.uiManager?.showResult(finalScore, bestScore, isNewRecord, this.getRatingText(finalScore));
     }
 
     private updateDifficulty(secondsLeft: number): void {

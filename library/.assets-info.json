@@ -22,7 +22,7 @@
       "uuid": "b81563bb-10c2-4364-a4fb-33b3044e3581"
     },
     "scripts/core": {
-      "time": 1781751286219.0764,
+      "time": 1781755713012.1912,
       "uuid": "3e7a1e1f-22d7-4715-9ab1-35532df74f70"
     },
     "scripts/game": {
@@ -42,7 +42,7 @@
       "uuid": "58a05250-0e21-4b07-88a4-a3a1530f0bc6"
     },
     "scripts/game/GameManager.ts": {
-      "time": 1781755086624.2312,
+      "time": 1781755713084.5981,
       "uuid": "7fb0ce1a-d40b-4b3d-92ce-2eed9aa6c1bf"
     },
     "scripts/game/Mole.ts": {
@@ -50,7 +50,7 @@
       "uuid": "c9da4686-68f1-4a86-bcbe-2dbbfa5599d6"
     },
     "scripts/game/MoleManager.ts": {
-      "time": 1781748511572.6165,
+      "time": 1781756042110.1445,
       "uuid": "6a086a09-3145-4a9d-a1a5-7a19622f1db4"
     },
     "scripts/game/ScoreManager.ts": {
@@ -62,7 +62,7 @@
       "uuid": "54bc61c5-a00a-4254-a9d7-e2b7f40a2c88"
     },
     "scripts/ui/UIManager.ts": {
-      "time": 1781755086703.7756,
+      "time": 1781755339904.239,
       "uuid": "d74f25be-f2dc-4f03-9545-0469a5e07b7a"
     },
     "audio.meta": {
@@ -145,14 +145,14 @@
       "time": 1781687922611.2756
     },
     "scenes/Main.scene": {
-      "time": 1781748312434.148,
+      "time": 1781757615215.517,
       "uuid": "4667e568-8ca4-4424-86f7-d4001f56f660"
     },
     "scripts/game/AutoGameBootstrap.ts.meta": {
       "time": 1781688780753.7078
     },
     "scripts/game/AutoGameBootstrap.ts": {
-      "time": 1781755117120.539,
+      "time": 1781756846325.7654,
       "uuid": "f455209e-7559-4185-83d8-d6e6d6eae97c"
     },
     "resources.meta": {
@@ -218,7 +218,7 @@
       "time": 1781690824632.006
     },
     "scripts/core/StorageManager.ts": {
-      "time": 1781755086378.5457,
+      "time": 1781755712868.3137,
       "uuid": "0db8c77b-ca9b-49b1-a2f8-b1ba487e4b48"
     },
     "scripts/game/ComboManager.ts": {
@@ -236,7 +236,7 @@
       "uuid": "15823214-3586-43fa-a4b0-c2ddb895a75a"
     },
     "scripts/platform/PlatformAdapter.ts": {
-      "time": 1781691385426.891,
+      "time": 1781755763159.608,
       "uuid": "67ffeb66-11b5-4c3e-bf76-246f0f52d3a7"
     },
     "resources/textures.meta": {
@@ -255,7 +255,7 @@
       "time": 1781751286222.126
     },
     "resources/textures": {
-      "time": 1781751286218.8164,
+      "time": 1781756802086.215,
       "uuid": "08bc91d3-dada-4e93-a0a7-33961ca8faaf"
     },
     "resources/textures/gameplay": {
@@ -263,7 +263,7 @@
       "uuid": "7d74922c-2166-4f5a-822f-e016643c255a"
     },
     "scripts/core/ArtResourceManager.ts": {
-      "time": 1781748667826.5305,
+      "time": 1781756846243.1006,
       "uuid": "d7b36ab9-e20f-4fcb-8f82-4ceff407b673"
     },
     "scripts/ui/SafeAreaLayout.ts": {
@@ -271,7 +271,7 @@
       "uuid": "d2469def-3b3f-40fd-a1bd-2e89609ce92d"
     },
     "scripts/ui/TutorialManager.ts": {
-      "time": 1781749238868.8801,
+      "time": 1781755713158.9287,
       "uuid": "33c3c7ba-3269-44c7-9b81-f0ae678ea4d4"
     },
     "resources/audio/bgm_meadow_loop.mp3.meta": {
@@ -322,6 +322,69 @@
     "scripts/game/DailyChallengeManager.ts": {
       "time": 1781755134441.089,
       "uuid": "2ac34fa4-93e0-4a14-9292-b92e3ab34f11"
+    },
+    "scripts/core/AnalyticsManager.ts.meta": {
+      "time": 1781755713012.2476
+    },
+    "scripts/core/AnalyticsManager.ts": {
+      "time": 1781755712939.61,
+      "uuid": "764eaf0c-261d-4ac8-86e3-b8581a736ef1"
+    },
+    "resources/textures/ui.meta": {
+      "time": 1781756802088.5127
+    },
+    "resources/textures/ui": {
+      "time": 1781756802091.2449,
+      "uuid": "cf3b3d85-c4da-4607-b2d8-16086b621932"
+    },
+    "resources/textures/ui/btn_pause.png.meta": {
+      "time": 1781756802165.7307
+    },
+    "resources/textures/ui/btn_primary.png.meta": {
+      "time": 1781756802164.6113
+    },
+    "resources/textures/ui/btn_secondary.png.meta": {
+      "time": 1781756802165.581
+    },
+    "resources/textures/ui/icon_score.png.meta": {
+      "time": 1781756802162.1348
+    },
+    "resources/textures/ui/icon_time.png.meta": {
+      "time": 1781756802164.978
+    },
+    "resources/textures/ui/result_card.png.meta": {
+      "time": 1781756802179.7268
+    },
+    "resources/textures/ui/title_sign.png.meta": {
+      "time": 1781756802180.474
+    },
+    "resources/textures/ui/icon_score.png": {
+      "time": 1781756777851.2983,
+      "uuid": "a5c90a55-1ce1-4d17-a218-f8a93f416d01"
+    },
+    "resources/textures/ui/btn_primary.png": {
+      "time": 1781756777612.273,
+      "uuid": "d2bb4fc3-38bb-4a3e-bb46-2a3f461082fc"
+    },
+    "resources/textures/ui/icon_time.png": {
+      "time": 1781756777869.844,
+      "uuid": "ee753abc-cb0f-4ba2-88e9-ccfac1fd355c"
+    },
+    "resources/textures/ui/btn_secondary.png": {
+      "time": 1781756777674.7166,
+      "uuid": "a2725897-f619-474e-962e-b967822f8f50"
+    },
+    "resources/textures/ui/btn_pause.png": {
+      "time": 1781756777831.4211,
+      "uuid": "0a8519a5-ca91-495f-b0c8-24744d45c388"
+    },
+    "resources/textures/ui/result_card.png": {
+      "time": 1781756777807.521,
+      "uuid": "5a7a80b6-c7f4-4289-8129-328b8d3272fb"
+    },
+    "resources/textures/ui/title_sign.png": {
+      "time": 1781756777733.3643,
+      "uuid": "03d5ce9a-e954-4a22-9ff6-814f3194a991"
     }
   },
   "missing": {}

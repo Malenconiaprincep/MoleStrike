@@ -1,5 +1,6 @@
 {
     "deviceOrientation": "portrait",
+    "openDataContext": "open-data",
     "networkTimeout": {
         "request": 5000,
         "connectSocket": 5000,

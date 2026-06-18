@@ -8,7 +8,10 @@
 - 微信/抖音震动反馈：命中地鼠时调用统一 `vibrateShort`
 - 分享入口：结算页 `分享战绩`
 - 排行榜入口：结算页 `排行榜`
-- 分数提交占位：结算时调用 `submitScore`
+- 平台静默登录：启动时调用 `wx.login` / `tt.login` 获取临时凭证
+- 云端最高分：结算时通过 `setUserCloudStorage` 写入 `best_score`
+- 好友排行榜：开放数据域读取、排序并绘制前 10 名
+- 编辑器排行榜降级提示与关闭流程
 - 编辑器预览安全降级：非小游戏环境不会报错
 
 ## Cocos 构建建议
@@ -38,7 +41,8 @@ npm run verify:release
    - 开始游戏
    - 分享战绩
    - 震动反馈
-   - 排行榜入口
+   - 排行榜加载、关闭和最高分更新
+   - 排行榜加载、关闭和最高分更新
    - 真机预览
 
 ### 抖音小游戏
@@ -55,16 +59,9 @@ npm run verify:release
 
 ## 排行榜说明
 
-当前 `PlatformAdapter.showLeaderboard()` 和 `submitScore()` 已经预留接口。
+两个构建模板均包含兼容 ES5 的 `open-data/index.js`，主域通过 `SubContextView` 显示共享画布。微信构建明确配置开放数据域；抖音构建器会移除该字段，因此运行时按 `tt.getOpenDataContext` / `tt.setUserCloudStorage` 能力检测，不支持时展示安全降级。开放数据域使用 `best_score` 作为唯一排行榜键；平台后台的数据权限、排行榜开关和正式 AppID 仍需运营账号配置后真机确认。
 
-微信小游戏排行榜通常需要开放数据域，完整上线前还需要：
-
-- 创建开放数据域项目。
-- 实现好友榜渲染。
-- 主域向开放数据域发送分数和显示消息。
-- 配置云端托管或平台要求的数据能力。
-
-抖音小游戏排行榜需要按平台当前后台能力配置，后续建议通过 `PlatformAdapter` 增加专门的 `DouyinLeaderboardAdapter`，避免玩法代码感知平台差异。
+`PlatformAdapter.login()` 只获取临时 code。正式用户会话必须由业务服务端使用平台密钥交换并签发；严禁把 AppSecret 写入客户端工程。
 
 ## 上线前必须替换/确认
 

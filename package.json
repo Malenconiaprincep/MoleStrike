@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "typecheck": "tsc --noEmit --skipLibCheck",
-    "verify:release": "npm run typecheck && node tools/verify_release.mjs",
+    "test:open-data": "node tools/test_open_data.mjs",
+    "verify:release": "npm run typecheck && npm run test:open-data && node tools/verify_release.mjs",
     "generate:sfx": "node tools/generate_sfx.mjs",
     "generate:bgm": "node tools/generate_bgm.mjs && ffmpeg -y -hide_banner -loglevel error -i tmp/audio/bgm_meadow_loop.wav -codec:a libmp3lame -b:a 96k -ar 22050 -ac 1 assets/resources/audio/bgm_meadow_loop.mp3"
   },

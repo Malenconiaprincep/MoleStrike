@@ -22,6 +22,9 @@ export class UIManager extends Component {
     @property(Node)
     public pauseMask: Node | null = null;
 
+    @property(Node)
+    public leaderboardPanel: Node | null = null;
+
     @property(Label)
     public finalScoreLabel: Label | null = null;
 
@@ -45,6 +48,7 @@ export class UIManager extends Component {
         this.setActive(this.gamePanel, false);
         this.setActive(this.resultPanel, false);
         this.setActive(this.pauseMask, false);
+        this.setActive(this.leaderboardPanel, false);
         this.resetPanelTransform(this.homePanel);
     }
 
@@ -53,6 +57,7 @@ export class UIManager extends Component {
         this.setActive(this.gamePanel, true);
         this.setActive(this.resultPanel, false);
         this.setActive(this.pauseMask, false);
+        this.setActive(this.leaderboardPanel, false);
         this.resetPanelTransform(this.gamePanel);
     }
 
@@ -61,6 +66,7 @@ export class UIManager extends Component {
         this.setActive(this.gamePanel, false);
         this.setActive(this.resultPanel, true);
         this.setActive(this.pauseMask, false);
+        this.setActive(this.leaderboardPanel, false);
 
         if (this.finalScoreLabel) {
             this.finalScoreLabel.string = `最终得分：${finalScore}`;

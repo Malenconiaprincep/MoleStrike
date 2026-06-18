@@ -26,12 +26,11 @@ System.register(["cc"], function (_export, _context) {
         PlatformType["Unknown"] = "unknown";
         return PlatformType;
       }({}));
+
       /**
        * 小游戏平台适配层。
        * 玩法代码只调用这里，微信/抖音 API 差异集中封装，编辑器预览时安全降级。
        */
-
-
       _export("PlatformAdapter", PlatformAdapter = class PlatformAdapter {
         static getPlatformType() {
           var api = this.getWechatApi();
@@ -60,6 +59,58 @@ System.register(["cc"], function (_export, _context) {
             menus: ['shareAppMessage']
           });
         }
+        /**
+         * 获取平台临时登录凭证。正式服必须由业务服务端交换 openId/session，
+         * 客户端不保存 code，也不把 AppSecret 放进包内。
+         */
+
+
+        static login() {
+          if (this.loginPromise) {
+            return this.loginPromise;
+          }
+
+          var platform = this.getPlatformType();
+          var api = this.getActiveApi();
+
+          if (!(api != null && api.login)) {
+            return Promise.resolve({
+              platform,
+              success: platform === PlatformType.Editor,
+              code: '',
+              errorMessage: platform === PlatformType.Editor ? '' : '当前环境不支持平台登录'
+            });
+          }
+
+          this.loginPromise = new Promise(resolve => {
+            api.login == null || api.login({
+              force: false,
+              success: result => {
+                var _ref, _result$code;
+
+                var code = (_ref = (_result$code = result.code) != null ? _result$code : result.anonymousCode) != null ? _ref : '';
+                resolve({
+                  platform,
+                  success: code.length > 0,
+                  code,
+                  errorMessage: code ? '' : '平台未返回登录凭证'
+                });
+              },
+              fail: error => {
+                var _error$errMsg;
+
+                this.loginPromise = null;
+                resolve({
+                  platform,
+                  success: false,
+                  code: '',
+                  errorMessage: (_error$errMsg = error.errMsg) != null ? _error$errMsg : '平台登录失败'
+                });
+              }
+            });
+          });
+          return this.loginPromise;
+        }
 
         static vibrateShort(type) {
           if (type === void 0) {
@@ -87,8 +138,9 @@ System.register(["cc"], function (_export, _context) {
         }
 
         static showLeaderboard() {
-          var wechatApi = this.getWechatApi();
-          var openDataContext = wechatApi == null || wechatApi.getOpenDataContext == null ? void 0 : wechatApi.getOpenDataContext();
+          var _this$getActiveApi;
+
+          var openDataContext = (_this$getActiveApi = this.getActiveApi()) == null || _this$getActiveApi.getOpenDataContext == null ? void 0 : _this$getActiveApi.getOpenDataContext();
 
           if (!(openDataContext != null && openDataContext.postMessage)) {
             return false;
@@ -100,12 +152,68 @@ System.register(["cc"], function (_export, _context) {
           return true;
         }
 
+        static hideLeaderboard() {
+          var _this$getActiveApi2;
+
+          (_this$getActiveApi2 = this.getActiveApi()) == null || _this$getActiveApi2.getOpenDataContext == null || (_this$getActiveApi2 = _this$getActiveApi2.getOpenDataContext()) == null || _this$getActiveApi2.postMessage == null || _this$getActiveApi2.postMessage({
+            type: 'hideLeaderboard'
+          });
+        }
+
         static submitScore(score) {
-          var wechatApi = this.getWechatApi();
-          var openDataContext = wechatApi == null || wechatApi.getOpenDataContext == null ? void 0 : wechatApi.getOpenDataContext();
+          var api = this.getActiveApi();
+          var normalizedScore = Math.max(0, Math.floor(score));
+          var openDataContext = api == null || api.getOpenDataContext == null ? void 0 : api.getOpenDataContext();
           openDataContext == null || openDataContext.postMessage == null || openDataContext.postMessage({
             type: 'submitScore',
-            score
+            score: normalizedScore
+          });
+
+          if (!(api != null && api.setUserCloudStorage)) {
+            return false;
+          }
+
+          api.setUserCloudStorage({
+            KVDataList: [{
+              key: 'best_score',
+              value: "" + normalizedScore
+            }]
+          });
+          return true;
+        }
+
+        static reportAnalytics(eventName, data) {
+          var api = this.getActiveApi();
+
+          try {
+            if (this.getPlatformType() === PlatformType.Wechat && api != null && api.reportEvent) {
+              api.reportEvent(eventName, data);
+              return true;
+            }
+
+            if (this.getPlatformType() === PlatformType.Douyin && api != null && api.reportAnalytics) {
+              api.reportAnalytics(eventName, data);
+              return true;
+            }
+          } catch (_unused) {
+            return false;
+          }
+
+          return false;
+        }
+
+        static registerErrorHandlers(handler) {
+          var api = this.getActiveApi();
+          api == null || api.onError == null || api.onError(error => {
+            var _error$errMsg2;
+
+            var message = typeof error === 'string' ? error : (_error$errMsg2 = error.errMsg) != null ? _error$errMsg2 : 'unknown runtime error';
+            handler('runtime', message);
+          });
+          api == null || api.onUnhandledRejection == null || api.onUnhandledRejection(result => {
+            var reason = result.reason;
+            var message = reason instanceof Error ? reason.message : String(reason != null ? reason : 'unknown rejection');
+            handler('promise', message);
           });
         }
 
@@ -124,6 +232,8 @@ System.register(["cc"], function (_export, _context) {
         }
 
       });
+
+      PlatformAdapter.loginPromise = null;
 
       _cclegacy._RF.pop();
 

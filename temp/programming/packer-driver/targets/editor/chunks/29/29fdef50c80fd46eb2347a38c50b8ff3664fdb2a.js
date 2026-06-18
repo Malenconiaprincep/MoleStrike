@@ -130,6 +130,11 @@ System.register(["__unresolved_0", "cc", "__unresolved_1", "__unresolved_2", "__
             moleNode.active = true;
             moleNode.setPosition(Vec3.ZERO);
             moleNode.layer = hole.layer;
+
+            for (const child of moleNode.children) {
+              child.layer = hole.layer;
+            }
+
             const mole = moleNode.getComponent(_crd && Mole === void 0 ? (_reportPossibleCrUseOfMole({
               error: Error()
             }), Mole) : Mole);

@@ -71,8 +71,8 @@
     },
     "4667e568-8ca4-4424-86f7-d4001f56f660": {
       "position": {
-        "x": 486.50437001377804,
-        "y": 359.0349709510597,
+        "x": 486.5043700137781,
+        "y": 359.03497095105956,
         "z": 5000
       },
       "rotation": {
@@ -87,10 +87,10 @@
         "z": 0
       },
       "contentRect": {
-        "x": -545.2736323216552,
-        "y": -584.6253448495152,
-        "width": 644,
-        "height": 589
+        "x": -498.8115794214571,
+        "y": -1392.1037814598542,
+        "width": 319,
+        "height": 692
       },
       "scale": 0.31208263722540297
     }
@@ -119,5 +119,19 @@
     "iso": 0,
     "aperture": 19,
     "shutter": 7
+  },
+  "scene_view": {
+    "isSceneLightOn": true,
+    "output_device": "__default_design__"
+  },
+  "game-view": {
+    "scaleValue": 82,
+    "sliderValue": 40,
+    "devicesInfo": {
+      "name": "Apple iPhone 12; 13; 14; 12/13 Pro",
+      "type": "device",
+      "width": 390,
+      "height": 844
+    }
   }
 }

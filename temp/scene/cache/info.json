@@ -1,0 +1,11 @@
+{
+    "systemInfo": {
+        "arch": "arm64",
+        "cpu": "Apple M4",
+        "version": "Darwin Kernel Version 24.3.0: Thu Jan  2 20:22:58 PST 2025; root:xnu-11215.81.4~3/RELEASE_ARM64_T8132"
+    },
+    "sceneListMap": {
+        "4667e568-8ca4-4424-86f7-d4001f56f660": "/Users/user/workspace/MoleStrike/assets/scenes/Main.scene"
+    },
+    "deviceMd5": "6ff9aba47cb7a0699ecc756e9329bc33"
+}
