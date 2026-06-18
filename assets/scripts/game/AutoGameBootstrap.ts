@@ -46,6 +46,8 @@ export class AutoGameBootstrap extends Component {
     @property
     public rebuildOnLoad = true;
 
+    private readonly shakeBasePositions = new WeakMap<Node, Vec3>();
+
     protected onLoad(): void {
         profiler.hideStats();
 
@@ -1018,13 +1020,19 @@ export class AutoGameBootstrap extends Component {
 
     /** 炸弹命中时轻微震动游戏层，幅度短且可控，不影响节点最终布局。 */
     private playScreenShake(gamePanel: Node): void {
+        let basePosition = this.shakeBasePositions.get(gamePanel);
+        if (!basePosition) {
+            basePosition = gamePanel.position.clone();
+            this.shakeBasePositions.set(gamePanel, basePosition);
+        }
+
         Tween.stopAllByTarget(gamePanel);
-        gamePanel.setPosition(Vec3.ZERO);
+        gamePanel.setPosition(basePosition);
         tween(gamePanel)
-            .to(0.035, { position: new Vec3(-9, 5, 0) })
-            .to(0.035, { position: new Vec3(8, -4, 0) })
-            .to(0.035, { position: new Vec3(-5, -3, 0) })
-            .to(0.045, { position: Vec3.ZERO })
+            .to(0.035, { position: new Vec3(basePosition.x - 9, basePosition.y + 5, basePosition.z) })
+            .to(0.035, { position: new Vec3(basePosition.x + 8, basePosition.y - 4, basePosition.z) })
+            .to(0.035, { position: new Vec3(basePosition.x - 5, basePosition.y - 3, basePosition.z) })
+            .to(0.045, { position: basePosition })
             .start();
     }
 

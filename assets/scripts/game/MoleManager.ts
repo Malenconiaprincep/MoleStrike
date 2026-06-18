@@ -10,7 +10,7 @@ type MoleScoreCallback = (score: number, hit: boolean, hole: Node) => void;
 
 /**
  * 地鼠生成管理器。
- * 当前阶段同一时间只生成 1 只普通地鼠；后续扩展不同地鼠类型时只需要替换 pickMoleConfig。
+ * 根据难度控制地鼠类型、生成速度和同屏数量。
  */
 @ccclass('MoleManager')
 export class MoleManager extends Component {
@@ -31,8 +31,8 @@ export class MoleManager extends Component {
 
     private running = false;
     private paused = false;
-    private activeMoleNode: Node | null = null;
-    private activeMole: Mole | null = null;
+    private readonly activeMoles = new Map<Node, { moleNode: Node; mole: Mole }>();
+    private spawnDelayLeft = -1;
     private onScore: MoleScoreCallback | null = null;
     private difficultyLevel = 1;
     private readonly molePools = new Map<MoleType, Node[]>();
@@ -52,17 +52,15 @@ export class MoleManager extends Component {
         if (this.difficultyLevel === 1) {
             this.minSpawnDelay = 0.28;
             this.maxSpawnDelay = 0.8;
-            return;
-        }
-
-        if (this.difficultyLevel === 2) {
+        } else if (this.difficultyLevel === 2) {
             this.minSpawnDelay = 0.2;
             this.maxSpawnDelay = 0.62;
-            return;
+        } else {
+            this.minSpawnDelay = 0.12;
+            this.maxSpawnDelay = 0.46;
         }
 
-        this.minSpawnDelay = 0.12;
-        this.maxSpawnDelay = 0.46;
+        this.scheduleNextSpawn(0);
     }
 
     public pauseSpawning(): void {
@@ -71,8 +69,9 @@ export class MoleManager extends Component {
         }
 
         this.paused = true;
-        this.unschedule(this.spawnOneMole);
-        this.activeMole?.pauseMole();
+        for (const activeMole of this.activeMoles.values()) {
+            activeMole.mole.pauseMole();
+        }
     }
 
     public resumeSpawning(): void {
@@ -81,9 +80,8 @@ export class MoleManager extends Component {
         }
 
         this.paused = false;
-        if (this.activeMole) {
-            this.activeMole.resumeMole();
-            return;
+        for (const activeMole of this.activeMoles.values()) {
+            activeMole.mole.resumeMole();
         }
 
         this.scheduleNextSpawn();
@@ -93,25 +91,64 @@ export class MoleManager extends Component {
         this.running = false;
         this.paused = false;
         this.onScore = null;
-        this.unschedule(this.spawnOneMole);
-        this.clearActiveMole();
+        this.spawnDelayLeft = -1;
+        this.clearActiveMoles();
     }
 
-    private scheduleNextSpawn(delay?: number): void {
+    protected update(deltaTime: number): void {
         if (!this.running || this.paused) {
             return;
         }
 
-        const nextDelay = delay ?? this.randomRange(this.minSpawnDelay, this.maxSpawnDelay);
-        this.scheduleOnce(this.spawnOneMole, nextDelay);
-    }
-
-    private spawnOneMole = (): void => {
-        if (!this.running || this.paused || this.activeMoleNode || this.holes.length === 0) {
+        this.pruneInactiveMoles();
+        if (this.activeMoles.size >= this.getMaxActiveMoles()) {
+            this.spawnDelayLeft = -1;
             return;
         }
 
-        const hole = this.holes[Math.floor(Math.random() * this.holes.length)];
+        if (this.spawnDelayLeft < 0) {
+            this.scheduleNextSpawn();
+        }
+
+        this.spawnDelayLeft -= deltaTime;
+        if (this.spawnDelayLeft <= 0) {
+            this.spawnOneMole();
+        }
+    }
+
+    private scheduleNextSpawn(delay?: number): void {
+        this.pruneInactiveMoles();
+
+        if (!this.running || this.paused || this.activeMoles.size >= this.getMaxActiveMoles()) {
+            return;
+        }
+
+        if (delay === 0 || this.spawnDelayLeft < 0) {
+            this.spawnDelayLeft = delay ?? this.randomRange(this.minSpawnDelay, this.maxSpawnDelay);
+        }
+    }
+
+    private spawnOneMole = (): void => {
+        this.spawnDelayLeft = -1;
+        this.pruneInactiveMoles();
+
+        if (!this.running || this.paused || this.holes.length === 0) {
+            return;
+        }
+
+        const openHoles = this.holes.filter((hole) => !this.activeMoles.has(hole));
+        const capacity = Math.min(this.getMaxActiveMoles() - this.activeMoles.size, openHoles.length);
+        const spawnCount = Math.min(capacity, this.pickSpawnCount());
+        for (let i = 0; i < spawnCount; i += 1) {
+            const holeIndex = Math.floor(Math.random() * openHoles.length);
+            const [hole] = openHoles.splice(holeIndex, 1);
+            this.spawnMoleInHole(hole);
+        }
+
+        this.scheduleNextSpawn();
+    };
+
+    private spawnMoleInHole(hole: Node): void {
         const config = this.pickMoleConfig();
         const moleNode = this.getMoleNode(config.type);
         hole.addChild(moleNode);
@@ -128,8 +165,7 @@ export class MoleManager extends Component {
             return;
         }
 
-        this.activeMoleNode = moleNode;
-        this.activeMole = mole;
+        this.activeMoles.set(hole, { moleNode, mole });
         this.audioManager?.playMoleAppear();
 
         mole.show(
@@ -142,11 +178,11 @@ export class MoleManager extends Component {
                 if (!hit) {
                     this.onScore?.(0, false, hole);
                 }
-                this.clearActiveMole();
+                this.clearActiveMole(hole);
                 this.scheduleNextSpawn();
             },
         );
-    };
+    }
 
     private pickMoleConfig(): MoleConfig {
         const roll = Math.random();
@@ -154,6 +190,10 @@ export class MoleManager extends Component {
         if (this.difficultyLevel === 1) {
             if (roll < 0.1) {
                 return this.withDifficulty(GOLDEN_MOLE_CONFIG);
+            }
+
+            if (roll < 0.18) {
+                return this.withDifficulty(BOMB_MOLE_CONFIG);
             }
 
             return this.withDifficulty(NORMAL_MOLE_CONFIG);
@@ -164,7 +204,7 @@ export class MoleManager extends Component {
                 return this.withDifficulty(GOLDEN_MOLE_CONFIG);
             }
 
-            if (roll < 0.28) {
+            if (roll < 0.36) {
                 return this.withDifficulty(BOMB_MOLE_CONFIG);
             }
 
@@ -175,11 +215,41 @@ export class MoleManager extends Component {
             return this.withDifficulty(GOLDEN_MOLE_CONFIG);
         }
 
-        if (roll < 0.38) {
+        if (roll < 0.48) {
             return this.withDifficulty(BOMB_MOLE_CONFIG);
         }
 
         return this.withDifficulty(NORMAL_MOLE_CONFIG);
+    }
+
+    private pickSpawnCount(): number {
+        const roll = Math.random();
+
+        if (this.difficultyLevel === 1) {
+            return 1;
+        }
+
+        if (this.difficultyLevel === 2) {
+            return roll < 0.35 ? 2 : 1;
+        }
+
+        if (roll < 0.18) {
+            return 3;
+        }
+
+        return roll < 0.58 ? 2 : 1;
+    }
+
+    private getMaxActiveMoles(): number {
+        if (this.difficultyLevel === 1) {
+            return 1;
+        }
+
+        if (this.difficultyLevel === 2) {
+            return 2;
+        }
+
+        return 3;
     }
 
     private withDifficulty(config: MoleConfig): MoleConfig {
@@ -190,13 +260,31 @@ export class MoleManager extends Component {
         };
     }
 
-    private clearActiveMole(): void {
-        if (this.activeMoleNode && this.activeMoleNode.isValid) {
-            this.recycleMoleNode(this.activeMoleNode);
+    private clearActiveMole(hole: Node): void {
+        const activeMole = this.activeMoles.get(hole);
+        if (activeMole?.moleNode.isValid) {
+            this.recycleMoleNode(activeMole.moleNode);
         }
 
-        this.activeMoleNode = null;
-        this.activeMole = null;
+        this.activeMoles.delete(hole);
+    }
+
+    private clearActiveMoles(): void {
+        for (const activeMole of this.activeMoles.values()) {
+            if (activeMole.moleNode.isValid) {
+                this.recycleMoleNode(activeMole.moleNode);
+            }
+        }
+
+        this.activeMoles.clear();
+    }
+
+    private pruneInactiveMoles(): void {
+        for (const [hole, activeMole] of this.activeMoles.entries()) {
+            if (!activeMole.moleNode.isValid || activeMole.moleNode.parent !== hole) {
+                this.activeMoles.delete(hole);
+            }
+        }
     }
 
     private randomRange(min: number, max: number): number {
