@@ -1,0 +1,41 @@
+6-18-2026 11:59:41 - log: Load engine in /Applications/Cocos/Creator/3.8.8/CocosCreator.app/Contents/Resources/resources/3d/engine
+6-18-2026 11:59:41 - log: Register native engine in /Applications/Cocos/Creator/3.8.8/CocosCreator.app/Contents/Resources/resources/3d/engine/native
+6-18-2026 11:59:41 - log: Request namespace: device-list
+6-18-2026 11:59:47 - log: [Scene] meshopt wasm decoder initialized
+6-18-2026 11:59:47 - log: [Scene] [box2d]:box2d wasm lib loaded.
+6-18-2026 11:59:47 - log: [Scene] [bullet]:bullet wasm lib loaded.
+6-18-2026 11:59:47 - log: [Scene] [PHYSICS]: using builtin.
+6-18-2026 11:59:47 - log: [Scene] Cocos Creator v3.8.8
+6-18-2026 11:59:47 - log: [Scene] Using custom pipeline: Builtin
+6-18-2026 11:59:47 - log: [Scene] [PHYSICS]: switch from builtin to bullet.
+6-18-2026 11:59:47 - log: [Scene] [PHYSICS2D]: switch from builtin to box2d.
+6-18-2026 11:59:48 - error: [Scene] Can't add component 'cc.Sprite' to Background because it conflicts with the existing 'cc.Graphics' derived component.Error: Can't add component 'cc.Sprite' to Background because it conflicts with the existing 'cc.Graphics' derived component.
+    at Node._checkMultipleComp (/Applications/Cocos/Creator/3.8.8/CocosCreator.app/Contents/Resources/resources/3d/engine/bin/.cache/dev/editor/bundled/index.js:52311:19)
+    at Node.addComponent (/Applications/Cocos/Creator/3.8.8/CocosCreator.app/Contents/Resources/resources/3d/engine/bin/.cache/dev/editor/bundled/index.js:53689:18)
+    at Function.applySprite (file:///Users/user/workspace/MoleStrike/temp/programming/packer-driver/targets/editor/chunks/6e/file:/Users/user/workspace/MoleStrike/assets/scripts/core/ArtResourceManager.ts:53:58)
+    at AutoGameBootstrap.buildGame (file:///Users/user/workspace/MoleStrike/temp/programming/packer-driver/targets/editor/chunks/21/file:/Users/user/workspace/MoleStrike/assets/scripts/game/AutoGameBootstrap.ts:77:28)
+    at AutoGameBootstrap.onLoad (file:///Users/user/workspace/MoleStrike/temp/programming/packer-driver/targets/editor/chunks/21/file:/Users/user/workspace/MoleStrike/assets/scripts/game/AutoGameBootstrap.ts:55:14)
+    at eval (/Applications/Cocos/Creator/3.8.8/CocosCreator.app/Contents/Resources/resources/3d/engine/bin/.cache/dev/editor/bundled/index.js:51220:132)
+    at OneOffInvoker.eval [as _invoke] (/Applications/Cocos/Creator/3.8.8/CocosCreator.app/Contents/Resources/resources/3d/engine/bin/.cache/dev/editor/bundled/index.js:49513:9)
+    at OneOffInvoker.invoke (/Applications/Cocos/Creator/3.8.8/CocosCreator.app/Contents/Resources/resources/3d/engine/bin/.cache/dev/editor/bundled/index.js:49627:16)
+    at NodeActivator.activateNode (/Applications/Cocos/Creator/3.8.8/CocosCreator.app/Contents/Resources/resources/3d/engine/bin/.cache/dev/editor/bundled/index.js:51271:27)
+    at Scene._activate (/Applications/Cocos/Creator/3.8.8/CocosCreator.app/Contents/Resources/resources/3d/engine/bin/.cache/dev/editor/bundled/index.js:59188:44)
+    at Director.runSceneImmediate (/Applications/Cocos/Creator/3.8.8/CocosCreator.app/Contents/Resources/resources/3d/engine/bin/.cache/dev/editor/bundled/index.js:82681:17)
+    at /Applications/Cocos/Creator/3.8.8/CocosCreator.app/Contents/Resources/app.asar/builtin/scene/dist/script/3d/manager/scene/utils.ccc:1:682
+    at eval (/Applications/Cocos/Creator/3.8.8/CocosCreator.app/Contents/Resources/resources/3d/engine/bin/.cache/dev/editor/bundled/index.js:125859:9)
+    at eval (/Applications/Cocos/Creator/3.8.8/CocosCreator.app/Contents/Resources/resources/3d/engine/bin/.cache/dev/editor/bundled/index.js:169027:9)
+    at sentryWrapped (/Applications/Cocos/Creator/3.8.8/CocosCreator.app/Contents/Resources/app.asar/node_modules/@sentry/browser/src/helpers.ts:116:17)
+6-18-2026 11:59:48 - error: [Scene] Can't add component 'cc.Sprite' to Background because it conflicts with the existing 'cc.Graphics' derived component.Error: Can't add component 'cc.Sprite' to Background because it conflicts with the existing 'cc.Graphics' derived component.
+    at Node._checkMultipleComp (/Applications/Cocos/Creator/3.8.8/CocosCreator.app/Contents/Resources/resources/3d/engine/bin/.cache/dev/editor/bundled/index.js:52311:19)
+    at Node.addComponent (/Applications/Cocos/Creator/3.8.8/CocosCreator.app/Contents/Resources/resources/3d/engine/bin/.cache/dev/editor/bundled/index.js:53689:18)
+    at Function.applySprite (file:///Users/user/workspace/MoleStrike/temp/programming/packer-driver/targets/editor/chunks/6e/file:/Users/user/workspace/MoleStrike/assets/scripts/core/ArtResourceManager.ts:53:58)
+    at AutoGameBootstrap.buildGame (file:///Users/user/workspace/MoleStrike/temp/programming/packer-driver/targets/editor/chunks/21/file:/Users/user/workspace/MoleStrike/assets/scripts/game/AutoGameBootstrap.ts:77:28)
+    at AutoGameBootstrap.start (file:///Users/user/workspace/MoleStrike/temp/programming/packer-driver/targets/editor/chunks/21/file:/Users/user/workspace/MoleStrike/assets/scripts/game/AutoGameBootstrap.ts:65:14)
+    at eval (/Applications/Cocos/Creator/3.8.8/CocosCreator.app/Contents/Resources/resources/3d/engine/bin/.cache/dev/editor/bundled/index.js:49684:16)
+    at OneOffInvoker.eval [as _invoke] (/Applications/Cocos/Creator/3.8.8/CocosCreator.app/Contents/Resources/resources/3d/engine/bin/.cache/dev/editor/bundled/index.js:49513:9)
+    at OneOffInvoker.invoke (/Applications/Cocos/Creator/3.8.8/CocosCreator.app/Contents/Resources/resources/3d/engine/bin/.cache/dev/editor/bundled/index.js:49627:16)
+    at ComponentScheduler.startPhase (/Applications/Cocos/Creator/3.8.8/CocosCreator.app/Contents/Resources/resources/3d/engine/bin/.cache/dev/editor/bundled/index.js:49858:29)
+    at Director.tick (/Applications/Cocos/Creator/3.8.8/CocosCreator.app/Contents/Resources/resources/3d/engine/bin/.cache/dev/editor/bundled/index.js:82966:35)
+    at EngineManager.tickInEditMode (/Applications/Cocos/Creator/3.8.8/CocosCreator.app/Contents/Resources/app.asar/builtin/scene/dist/script/3d/manager/engine/index.ccc:1:2946)
+    at EngineManager._tick (/Applications/Cocos/Creator/3.8.8/CocosCreator.app/Contents/Resources/app.asar/builtin/scene/dist/script/3d/manager/engine/index.ccc:1:3989)
+    at sentryWrapped (/Applications/Cocos/Creator/3.8.8/CocosCreator.app/Contents/Resources/app.asar/node_modules/@sentry/browser/src/helpers.ts:116:17)

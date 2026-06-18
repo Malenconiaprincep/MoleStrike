@@ -1,0 +1,1 @@
+[1,0,0,[["cc.TextAsset",["_name","text"],1]],[[0,0,1,3]],[[0,"README","# Resources\n\nCocos `resources.load` 可动态加载此目录下的资源。\n\n当前自动加载音效路径：\n\n- `audio/sfx_button_click`\n- `audio/sfx_mole_appear`\n- `audio/sfx_hit_mole`\n- `audio/sfx_countdown_end`\n- `audio/sfx_game_win`\n\n"]],0,0,[],[],[]]

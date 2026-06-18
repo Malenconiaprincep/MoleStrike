@@ -1,0 +1,19 @@
+{
+  "name": "mole-strike",
+  "version": "0.1.0",
+  "description": "地鼠突击队（Mole Strike）- Cocos Creator 3.8 LTS 入门小游戏项目",
+  "private": true,
+  "scripts": {
+    "typecheck": "tsc --noEmit --skipLibCheck",
+    "verify:release": "npm run typecheck && node tools/verify_release.mjs",
+    "generate:sfx": "node tools/generate_sfx.mjs",
+    "generate:bgm": "node tools/generate_bgm.mjs && ffmpeg -y -hide_banner -loglevel error -i tmp/audio/bgm_meadow_loop.wav -codec:a libmp3lame -b:a 96k -ar 22050 -ac 1 assets/resources/audio/bgm_meadow_loop.mp3"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "creator": {
+    "version": "3.8.8"
+  },
+  "uuid": "dcf58c6e-8870-4157-a959-02ebcdc97117"
+}

@@ -1,0 +1,8 @@
+{
+  "__type__": "cc.TextAsset",
+  "_name": "README",
+  "_objFlags": 0,
+  "__editorExtras__": {},
+  "_native": "",
+  "text": "# Prefabs\n\n建议在 Cocos Creator 编辑器中创建：\n\n- `Mole.prefab`\n- `Hole.prefab`\n- `CartoonButton.prefab`\n\n详细结构见 `docs/SCENE_AND_PREFAB.md`。\n\n"
+}
