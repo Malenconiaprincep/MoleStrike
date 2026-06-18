@@ -1,4 +1,4 @@
-import { _decorator, Component, Node } from 'cc';
+import { _decorator, Component, game, Game, Node } from 'cc';
 import { AudioManager } from '../core/AudioManager';
 import { AnalyticsManager } from '../core/AnalyticsManager';
 import { DEFAULT_GAME_SECONDS, GameState } from '../core/GameTypes';
@@ -55,10 +55,24 @@ export class GameManager extends Component {
     private roundMisses = 0;
     private roundMaxCombo = 0;
     private roundStartedAt = 0;
+    private pausedByAppHide = false;
+
+    protected onEnable(): void {
+        game.on(Game.EVENT_HIDE, this.handleAppHide, this);
+        game.on(Game.EVENT_SHOW, this.handleAppShow, this);
+    }
+
+    protected onDisable(): void {
+        game.off(Game.EVENT_HIDE, this.handleAppHide, this);
+        game.off(Game.EVENT_SHOW, this.handleAppShow, this);
+    }
 
     protected start(): void {
         AnalyticsManager.initialize();
         PlatformAdapter.setupShareMenu();
+        PlatformAdapter.initializeSidebarRevisitTracking(() => {
+            AnalyticsManager.track('sidebar_revisit_launch');
+        });
         void PlatformAdapter.login().then((result) => {
             AnalyticsManager.track('login_result', {
                 platform: result.platform,
@@ -94,17 +108,18 @@ export class GameManager extends Component {
         this.audioManager?.playButtonClick();
 
         if (this.state === GameState.Playing) {
-            this.pauseGame();
+            this.pauseGame('button');
             return;
         }
 
         if (this.state === GameState.Paused) {
-            this.resumeGame();
+            this.resumeGame('button');
         }
     }
 
     public startGame(source: 'home' | 'replay' = 'home'): void {
         this.state = GameState.Playing;
+        this.pausedByAppHide = false;
         this.difficultyLevel = 1;
         this.roundPositiveHits = 0;
         this.roundGoldenHits = 0;
@@ -153,7 +168,7 @@ export class GameManager extends Component {
         });
     }
 
-    public pauseGame(): void {
+    public pauseGame(source: 'button' | 'app_hide' = 'button'): void {
         if (this.state !== GameState.Playing) {
             return;
         }
@@ -162,23 +177,44 @@ export class GameManager extends Component {
         this.timerManager?.pauseTimer();
         this.moleManager?.pauseSpawning();
         this.uiManager?.showPauseMask(true);
-        AnalyticsManager.track('game_pause', { seconds_left: this.timerManager?.getSecondsLeft() ?? 0 });
+        AnalyticsManager.track('game_pause', { seconds_left: this.timerManager?.getSecondsLeft() ?? 0, source });
     }
 
-    public resumeGame(): void {
+    public resumeGame(source: 'button' | 'app_show' = 'button'): void {
         if (this.state !== GameState.Paused) {
             return;
         }
 
+        this.pausedByAppHide = false;
         this.state = GameState.Playing;
         this.timerManager?.resumeTimer();
         this.moleManager?.resumeSpawning();
         this.uiManager?.showPauseMask(false);
-        AnalyticsManager.track('game_resume', { seconds_left: this.timerManager?.getSecondsLeft() ?? 0 });
+        AnalyticsManager.track('game_resume', { seconds_left: this.timerManager?.getSecondsLeft() ?? 0, source });
+    }
+
+    private handleAppHide(): void {
+        if (this.state !== GameState.Playing) {
+            return;
+        }
+
+        this.pausedByAppHide = true;
+        this.pauseGame('app_hide');
+    }
+
+    private handleAppShow(): void {
+        if (!this.pausedByAppHide || this.state !== GameState.Paused) {
+            return;
+        }
+
+        AnalyticsManager.track('game_show_after_hide', {
+            seconds_left: this.timerManager?.getSecondsLeft() ?? 0,
+        });
     }
 
     private enterHome(): void {
         this.state = GameState.Home;
+        this.pausedByAppHide = false;
         this.timerManager?.stopTimer();
         this.timerManager?.resetTimer(this.gameSeconds);
         this.scoreManager?.reset();

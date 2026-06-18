@@ -201,6 +201,12 @@ if (!sourceText.includes("track('game_start'") || !sourceText.includes("track('g
 if (!sourceText.includes('onUnhandledRejection') || !sourceText.includes('runtime_error')) {
   fail('缺少小游戏运行时错误与未处理 Promise 拒绝采集');
 }
+if (!sourceText.includes('tt.navigateToScene') || !sourceText.includes("scene: 'sidebar'")) {
+  fail('抖音小游戏缺少侧边栏复访 tt.navigateToScene 接入');
+}
+if (!sourceText.includes('tt.addShortcut')) {
+  warn('未检测到抖音添加到桌面 tt.addShortcut 接入');
+}
 if (!sourceText.includes('label.enableOutline = true') || !sourceText.includes('label.outlineColor')) {
   fail('运行时标签缺少统一文字描边');
 }

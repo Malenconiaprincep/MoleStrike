@@ -113,9 +113,11 @@ export class UIManager extends Component {
     }
 
     public showDailyChallenge(snapshot: DailyChallengeSnapshot, justCompleted = false): void {
+        const progress = Math.min(snapshot.progress, snapshot.target);
+        const status = snapshot.completed ? '已完成' : `${progress}/${snapshot.target}`;
         const text = DailyChallengeManager.getDisplayText(snapshot);
         if (this.dailyChallengeLabel) {
-            this.dailyChallengeLabel.string = `${text}\n勋章：${snapshot.medalCount}`;
+            this.dailyChallengeLabel.string = `今日挑战：${snapshot.title}\n进度 ${status}    勋章 ${snapshot.medalCount}`;
         }
 
         if (this.resultChallengeLabel) {

@@ -201,11 +201,11 @@ export class AutoGameBootstrap extends Component {
         homePanel.addChild(subtitle);
         subtitle.setPosition(0, layout.height / 2 - 462, 0);
 
-        const challengeCard = this.createInfoPill('DailyChallengeCard', 590, 96, new Color(255, 247, 206, 230));
-        const dailyChallenge = this.createLabel('DailyChallengeLabel', '今日挑战载入中…', 24, new Color(91, 72, 47, 255), 540, 68);
+        const challengeCard = this.createInfoPill('DailyChallengeCard', 590, 104, new Color(255, 247, 206, 230));
+        const dailyChallenge = this.createLabel('DailyChallengeLabel', '今日挑战\n载入中…', 24, new Color(91, 72, 47, 255), 540, 82);
         homePanel.addChild(challengeCard);
         challengeCard.addChild(dailyChallenge);
-        challengeCard.setPosition(0, layout.height / 2 - 548, 0);
+        challengeCard.setPosition(0, layout.height / 2 - 552, 0);
 
         const startButton = this.createButton('StartButton', '立即开打', new Color(255, 184, 65, 255), () => {
             gameManager.handleStartButton();
@@ -219,7 +219,20 @@ export class AutoGameBootstrap extends Component {
 
         const soundButton = this.createSoundButton('SoundButton', audioManager);
         homePanel.addChild(soundButton);
-        soundButton.setPosition(0, layout.height / 2 - 866, 0);
+        soundButton.setPosition(layout.width / 2 - 92, layout.height / 2 - 126, 0);
+
+        const sidebarButton = this.createButton('SidebarButton', '侧边栏', new Color(183, 215, 145, 255), () => {
+            const available = PlatformAdapter.navigateToSidebar();
+            AnalyticsManager.track('sidebar_revisit_click', { available });
+        }, 164, 62, 24, ArtAssetKey.SecondaryButton);
+        const desktopButton = this.createButton('DesktopButton', '加桌面', new Color(255, 232, 149, 255), () => {
+            const available = PlatformAdapter.addToDesktop();
+            AnalyticsManager.track('add_desktop_click', { available });
+        }, 164, 62, 24, ArtAssetKey.SecondaryButton);
+        homePanel.addChild(sidebarButton);
+        homePanel.addChild(desktopButton);
+        sidebarButton.setPosition(-layout.width / 2 + 96, layout.height / 2 - 126, 0);
+        desktopButton.setPosition(-layout.width / 2 + 96, layout.height / 2 - 198, 0);
 
         const demoMole = this.createCuteMolePreview();
         homePanel.addChild(demoMole);
@@ -275,7 +288,7 @@ export class AutoGameBootstrap extends Component {
         ArtResourceManager.applySprite(scoreIcon, ArtAssetKey.ScoreIcon, 64, 64);
         ArtResourceManager.applySprite(timeIcon, ArtAssetKey.TimeIcon, 64, 64);
 
-        const scoreLabelNode = this.createLabel('ScoreLabel', 'Score: 0', 32, new Color(74, 45, 28, 255), 210, 70);
+        const scoreLabelNode = this.createLabel('ScoreLabel', '得分 0', 32, new Color(74, 45, 28, 255), 210, 70);
         const timeLabelNode = this.createLabel('TimeLabel', '60', 42, new Color(206, 72, 41, 255), 160, 70);
         topBar.addChild(scoreLabelNode);
         topBar.addChild(timeLabelNode);
@@ -286,12 +299,12 @@ export class AutoGameBootstrap extends Component {
         holeRoot.layer = Layers.Enum.UI_2D;
         holeRoot.addComponent(UITransform).setContentSize(690, 720);
         gamePanel.addChild(holeRoot);
-        holeRoot.setPosition(0, layout.height / 2 - 705, 0);
+        holeRoot.setPosition(0, layout.height / 2 - 775, 0);
 
         const fieldFrame = this.createFieldFrame('FieldFrame');
         gamePanel.addChild(fieldFrame);
         fieldFrame.setSiblingIndex(holeRoot.getSiblingIndex());
-        fieldFrame.setPosition(0, layout.height / 2 - 705, 0);
+        fieldFrame.setPosition(0, layout.height / 2 - 775, 0);
 
         moleManager.holes = this.createHoles(holeRoot);
 
@@ -304,11 +317,11 @@ export class AutoGameBootstrap extends Component {
         const comboLabelNode = this.createLabel('ComboLabel', '', 46, new Color(255, 244, 174, 255), 360, 80);
         gamePanel.addChild(comboLabelNode);
         comboLabelNode.active = false;
-        comboLabelNode.setPosition(0, layout.height / 2 - 290, 0);
+        comboLabelNode.setPosition(0, layout.height / 2 - 318, 0);
 
         const difficultyLabelNode = this.createLabel('DifficultyLabel', '难度：轻松', 26, new Color(82, 124, 50, 255), 260, 54);
         gamePanel.addChild(difficultyLabelNode);
-        difficultyLabelNode.setPosition(0, layout.height / 2 - 220, 0);
+        difficultyLabelNode.setPosition(0, layout.height / 2 - 250, 0);
 
         return {
             scoreLabel: scoreLabelNode.getComponent(Label)!,
@@ -680,23 +693,43 @@ export class AutoGameBootstrap extends Component {
     }
 
     private createSoundButton(name: string, audioManager: AudioManager): Node {
-        const soundButton = this.createButton(
-            name,
-            audioManager.isSoundEnabled() ? '音效  开' : '音效  关',
-            new Color(255, 232, 149, 255),
-            () => {
-                audioManager.playButtonClick();
-                const enabled = audioManager.toggleSound();
-                AnalyticsManager.track('sound_toggle', { enabled });
-                const label = soundButton.getChildByName('Label')?.getComponent(Label);
-                if (label) {
-                    label.string = enabled ? '音效  开' : '音效  关';
-                }
-            },
-            200,
-            66,
-            26,
+        const size = 82;
+        const soundButton = new Node(name);
+        soundButton.layer = Layers.Enum.UI_2D;
+        soundButton.addComponent(UITransform).setContentSize(size, size);
+        const graphics = soundButton.addComponent(Graphics);
+        graphics.fillColor = new Color(91, 52, 31, 145);
+        graphics.circle(0, -5, size / 2);
+        graphics.fill();
+        graphics.fillColor = new Color(255, 232, 149, 255);
+        graphics.circle(0, 0, size / 2 - 4);
+        graphics.fill();
+        graphics.strokeColor = new Color(112, 72, 39, 255);
+        graphics.lineWidth = 4;
+        graphics.circle(0, 0, size / 2 - 4);
+        graphics.stroke();
+        soundButton.addComponent(Button);
+        this.bindButtonPressAnimation(soundButton);
+        const labelNode = this.createLabel(
+            'Label',
+            audioManager.isSoundEnabled() ? '音效\n开' : '音效\n关',
+            22,
+            new Color(91, 52, 31, 255),
+            size,
+            size,
         );
+        soundButton.addChild(labelNode);
+        labelNode.setPosition(0, 0, 0);
+        soundButton.on(Node.EventType.TOUCH_END, () => {
+            audioManager.playButtonClick();
+            const enabled = audioManager.toggleSound();
+            AnalyticsManager.track('sound_toggle', { enabled });
+            const label = soundButton.getChildByName('Label')?.getComponent(Label);
+            if (label) {
+                label.string = enabled ? '音效\n开' : '音效\n关';
+            }
+            soundButton.setScale(Vec3.ONE);
+        });
         return soundButton;
     }
 

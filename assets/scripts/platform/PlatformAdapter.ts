@@ -15,6 +15,16 @@ interface OpenDataContext {
     postMessage?: (message: Record<string, unknown>) => void;
 }
 
+interface SceneCheckResult {
+    isExist?: boolean;
+}
+
+interface LaunchOptions {
+    scene?: string | number;
+    launch_from?: string;
+    location?: string;
+}
+
 interface MiniGameApi {
     vibrateShort?: (options?: { type?: 'light' | 'medium' | 'heavy'; success?: MiniGameCallback; fail?: MiniGameCallback }) => void;
     shareAppMessage?: (options?: { title?: string; query?: string; imageUrl?: string }) => void;
@@ -35,6 +45,24 @@ interface MiniGameApi {
     reportAnalytics?: (eventName: string, data: Record<string, string | number>) => void;
     onError?: (callback: (message: string | MiniGameError) => void) => void;
     onUnhandledRejection?: (callback: (result: { reason?: unknown }) => void) => void;
+    onShow?: (callback: (options: LaunchOptions) => void) => void;
+    getLaunchOptionsSync?: () => LaunchOptions;
+    checkScene?: (options: {
+        scene: 'sidebar';
+        success?: (result: SceneCheckResult) => void;
+        fail?: (error: MiniGameError) => void;
+    }) => void;
+    navigateToScene?: (options: {
+        scene: 'sidebar';
+        success?: MiniGameCallback;
+        fail?: (error: MiniGameError) => void;
+        complete?: MiniGameCallback;
+    }) => void;
+    addShortcut?: (options?: {
+        success?: MiniGameCallback;
+        fail?: (error: MiniGameError) => void;
+        complete?: MiniGameCallback;
+    }) => void;
 }
 
 declare const wx: MiniGameApi | undefined;
@@ -60,6 +88,8 @@ export interface PlatformLoginResult {
  */
 export class PlatformAdapter {
     private static loginPromise: Promise<PlatformLoginResult> | null = null;
+    private static sidebarTrackingInitialized = false;
+    private static lastLaunchOptions: LaunchOptions | null = null;
 
     public static getPlatformType(): PlatformType {
         const api = this.getWechatApi();
@@ -85,6 +115,68 @@ export class PlatformAdapter {
             withShareTicket: true,
             menus: ['shareAppMessage'],
         });
+    }
+
+    public static initializeSidebarRevisitTracking(onLaunchFromSidebar?: () => void): void {
+        const api = this.getDouyinApi();
+        if (!api || this.sidebarTrackingInitialized) {
+            return;
+        }
+
+        this.sidebarTrackingInitialized = true;
+        const launchOptions = api.getLaunchOptionsSync?.() ?? null;
+        if (launchOptions) {
+            this.lastLaunchOptions = launchOptions;
+            if (this.isSidebarLaunch(launchOptions)) {
+                onLaunchFromSidebar?.();
+            }
+        }
+
+        api.onShow?.((options) => {
+            this.lastLaunchOptions = options;
+            if (this.isSidebarLaunch(options)) {
+                onLaunchFromSidebar?.();
+            }
+        });
+    }
+
+    public static checkSidebarAvailable(): Promise<boolean> {
+        const api = this.getDouyinApi();
+        if (!api?.checkScene) {
+            return Promise.resolve(false);
+        }
+
+        return new Promise((resolve) => {
+            api.checkScene?.({
+                scene: 'sidebar',
+                success: (result) => {
+                    resolve(result.isExist !== false);
+                },
+                fail: () => {
+                    resolve(false);
+                },
+            });
+        });
+    }
+
+    public static navigateToSidebar(): boolean {
+        if (typeof tt === 'undefined' || !tt.navigateToScene) {
+            return false;
+        }
+
+        tt.navigateToScene({
+            scene: 'sidebar',
+        });
+        return true;
+    }
+
+    public static addToDesktop(): boolean {
+        if (typeof tt === 'undefined' || !tt.addShortcut) {
+            return false;
+        }
+
+        tt.addShortcut();
+        return true;
     }
 
     /**
@@ -228,5 +320,9 @@ export class PlatformAdapter {
 
     private static getDouyinApi(): MiniGameApi | null {
         return typeof tt !== 'undefined' ? tt : null;
+    }
+
+    private static isSidebarLaunch(options: LaunchOptions): boolean {
+        return options.launch_from === 'homepage' && options.location === 'sidebar_card';
     }
 }

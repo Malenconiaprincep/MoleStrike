@@ -30,7 +30,7 @@ export class ScoreManager extends Component {
 
     private refreshView(): void {
         if (this.scoreLabel) {
-            this.scoreLabel.string = `Score: ${this.score}`;
+            this.scoreLabel.string = `得分 ${this.score}`;
         }
     }
 }
