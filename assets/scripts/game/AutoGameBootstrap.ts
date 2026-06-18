@@ -189,46 +189,47 @@ export class AutoGameBootstrap extends Component {
     ): { dailyChallengeLabel: Label } {
         const layout = this.getLayoutSize();
 
-        const sign = this.createWoodSign('TitleSign', 610, 170);
+        const sign = this.createWoodSign('TitleSign', 630, 180);
         homePanel.addChild(sign);
-        sign.setPosition(0, layout.height / 2 - 345, 0);
+        sign.setPosition(0, layout.height / 2 - 330, 0);
 
-        const title = this.createLabel('Title', '地鼠突击队', 66, new Color(255, 247, 207, 255), 560, 120);
+        const title = this.createLabel('Title', '地鼠突击队', 68, new Color(255, 247, 207, 255), 560, 120);
         homePanel.addChild(title);
-        title.setPosition(0, layout.height / 2 - 360, 0);
+        title.setPosition(0, layout.height / 2 - 340, 0);
 
-        const subtitle = this.createLabel('Subtitle', '60秒打地鼠挑战', 34, new Color(101, 83, 35, 255), 460, 70);
+        const subtitle = this.createLabel('Subtitle', '60 秒限时突击  ·  连击冲榜', 28, new Color(101, 83, 35, 255), 540, 62);
         homePanel.addChild(subtitle);
-        subtitle.setPosition(0, layout.height / 2 - 485, 0);
+        subtitle.setPosition(0, layout.height / 2 - 462, 0);
 
-        const dailyChallenge = this.createLabel(
-            'DailyChallengeLabel',
-            '今日挑战载入中…',
-            25,
-            new Color(91, 72, 47, 255),
-            600,
-            86,
-        );
-        homePanel.addChild(dailyChallenge);
-        dailyChallenge.setPosition(0, layout.height / 2 - 575, 0);
+        const challengeCard = this.createInfoPill('DailyChallengeCard', 590, 96, new Color(255, 247, 206, 230));
+        const dailyChallenge = this.createLabel('DailyChallengeLabel', '今日挑战载入中…', 24, new Color(91, 72, 47, 255), 540, 68);
+        homePanel.addChild(challengeCard);
+        challengeCard.addChild(dailyChallenge);
+        challengeCard.setPosition(0, layout.height / 2 - 548, 0);
 
-        const startButton = this.createButton('StartButton', '开始游戏', new Color(255, 184, 65, 255), () => {
+        const startButton = this.createButton('StartButton', '立即开打', new Color(255, 184, 65, 255), () => {
             gameManager.handleStartButton();
-        }, 360, 104, 38, ArtAssetKey.PrimaryButton);
+        }, 410, 116, 42, ArtAssetKey.PrimaryButton);
         homePanel.addChild(startButton);
-        startButton.setPosition(0, layout.height / 2 - 735, 0);
+        startButton.setPosition(0, layout.height / 2 - 704, 0);
+
+        const startHint = this.createLabel('StartHint', '单指点击地鼠，避开炸弹', 24, new Color(78, 112, 46, 255), 460, 52);
+        homePanel.addChild(startHint);
+        startHint.setPosition(0, layout.height / 2 - 792, 0);
 
         const soundButton = this.createSoundButton('SoundButton', audioManager);
         homePanel.addChild(soundButton);
-        soundButton.setPosition(0, layout.height / 2 - 845, 0);
+        soundButton.setPosition(0, layout.height / 2 - 866, 0);
 
         const demoMole = this.createCuteMolePreview();
         homePanel.addChild(demoMole);
-        demoMole.setPosition(0, layout.height / 2 - 990, 0);
+        demoMole.setPosition(0, layout.height / 2 - 1010, 0);
 
-        const hint = this.createLabel('HintLabel', '金色+5，炸弹-3，小心连击断掉', 26, new Color(82, 124, 50, 255), 560, 60);
-        homePanel.addChild(hint);
-        hint.setPosition(0, -layout.height / 2 + 140, 0);
+        const hintPill = this.createInfoPill('RuleHintPill', 560, 64, new Color(75, 142, 62, 175));
+        const hint = this.createLabel('HintLabel', '金色 +5  ·  炸弹 -3  ·  连击不断', 24, new Color(255, 249, 219, 255), 520, 54);
+        homePanel.addChild(hintPill);
+        hintPill.addChild(hint);
+        hintPill.setPosition(0, -layout.height / 2 + 150, 0);
 
         return {
             dailyChallengeLabel: dailyChallenge.getComponent(Label)!,
@@ -344,7 +345,7 @@ export class AutoGameBootstrap extends Component {
         const bestScore = this.createLabel('BestScoreLabel', '历史最高：0', 34, new Color(102, 117, 51, 255), 520, 74);
         const rating = this.createLabel('RatingLabel', '评级：见习队员', 34, new Color(173, 110, 55, 255), 520, 74);
         const newRecord = this.createLabel('NewRecordLabel', '新纪录！', 38, new Color(255, 116, 78, 255), 520, 74);
-        const challenge = this.createLabel('ResultChallengeLabel', '', 24, new Color(91, 72, 47, 255), 390, 100);
+        const challenge = this.createLabel('ResultChallengeLabel', '', 24, new Color(91, 72, 47, 255), 430, 76);
         resultPanel.addChild(title);
         resultPanel.addChild(finalScoreNode);
         resultPanel.addChild(bestScore);
@@ -354,14 +355,14 @@ export class AutoGameBootstrap extends Component {
         title.setPosition(0, layout.height / 2 - 420, 0);
         finalScoreNode.setPosition(0, layout.height / 2 - 540, 0);
         bestScore.setPosition(0, layout.height / 2 - 610, 0);
-        rating.setPosition(0, layout.height / 2 - 675, 0);
+        rating.setPosition(0, layout.height / 2 - 660, 0);
         newRecord.setPosition(0, layout.height / 2 - 480, 0);
-        challenge.setPosition(105, layout.height / 2 - 770, 0);
+        challenge.setPosition(112, layout.height / 2 - 732, 0);
         newRecord.active = false;
 
         const resultMole = this.createCuteMolePreview();
         resultPanel.addChild(resultMole);
-        resultMole.setPosition(-235, layout.height / 2 - 765, 0);
+        resultMole.setPosition(-235, layout.height / 2 - 728, 0);
 
         const replayButton = this.createButton('ReplayButton', '再来一次', new Color(255, 184, 65, 255), () => {
             gameManager.handleReplayButton();
@@ -496,18 +497,18 @@ export class AutoGameBootstrap extends Component {
         title.setPosition(0, 240, 0);
         symbol.setPosition(0, 88, 0);
         description.setPosition(0, -38, 0);
-        progress.setPosition(0, -142, 0);
+        progress.setPosition(0, -126, 0);
 
         const actionButton = this.createButton('TutorialActionButton', '下一步', new Color(255, 184, 65, 255), () => {
             tutorialManager.handleNext();
-        }, 330, 92, 34, ArtAssetKey.PrimaryButton);
+        }, 330, 88, 34, ArtAssetKey.PrimaryButton);
         const skipButton = this.createButton('TutorialSkipButton', '跳过引导', new Color(183, 215, 145, 255), () => {
             tutorialManager.handleSkip();
-        }, 230, 68, 26, ArtAssetKey.SecondaryButton);
+        }, 210, 58, 24, ArtAssetKey.SecondaryButton);
         tutorialPanel.addChild(actionButton);
         tutorialPanel.addChild(skipButton);
-        actionButton.setPosition(0, -245, 0);
-        skipButton.setPosition(0, -332, 0);
+        actionButton.setPosition(0, -222, 0);
+        skipButton.setPosition(0, -322, 0);
 
         tutorialManager.panel = tutorialPanel;
         tutorialManager.titleLabel = title.getComponent(Label);
@@ -576,6 +577,24 @@ export class AutoGameBootstrap extends Component {
         this.node.addChild(panel);
         panel.setPosition(Vec3.ZERO);
         return panel;
+    }
+
+    private createInfoPill(name: string, width: number, height: number, color: Color): Node {
+        const node = new Node(name);
+        node.layer = Layers.Enum.UI_2D;
+        node.addComponent(UITransform).setContentSize(width, height);
+        const graphics = node.addComponent(Graphics);
+        graphics.fillColor = new Color(91, 52, 31, 115);
+        graphics.roundRect(-width / 2, -height / 2 - 5, width, height, height / 2);
+        graphics.fill();
+        graphics.fillColor = color;
+        graphics.roundRect(-width / 2, -height / 2, width, height, height / 2);
+        graphics.fill();
+        graphics.strokeColor = new Color(255, 249, 219, 130);
+        graphics.lineWidth = 3;
+        graphics.roundRect(-width / 2 + 5, -height / 2 + 5, width - 10, height - 10, Math.max(8, height / 2 - 5));
+        graphics.stroke();
+        return node;
     }
 
     private createLabel(name: string, text: string, fontSize: number, color: Color, width = 360, height = 90): Node {
@@ -663,7 +682,7 @@ export class AutoGameBootstrap extends Component {
     private createSoundButton(name: string, audioManager: AudioManager): Node {
         const soundButton = this.createButton(
             name,
-            audioManager.isSoundEnabled() ? '声音：开' : '声音：关',
+            audioManager.isSoundEnabled() ? '音效  开' : '音效  关',
             new Color(255, 232, 149, 255),
             () => {
                 audioManager.playButtonClick();
@@ -671,12 +690,12 @@ export class AutoGameBootstrap extends Component {
                 AnalyticsManager.track('sound_toggle', { enabled });
                 const label = soundButton.getChildByName('Label')?.getComponent(Label);
                 if (label) {
-                    label.string = enabled ? '声音：开' : '声音：关';
+                    label.string = enabled ? '音效  开' : '音效  关';
                 }
             },
-            220,
-            72,
-            28,
+            200,
+            66,
+            26,
         );
         return soundButton;
     }

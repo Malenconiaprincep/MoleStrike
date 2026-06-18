@@ -21,7 +21,7 @@
 - `build-templates/wechatgame/game.json`
 - `build-templates/bytedance-mini-game/game.json`
 
-两个模板均固定为竖屏。抖音模板同时关闭系统状态栏。正式 AppID 属于平台账号信息，不写入仓库，应在 Cocos 构建面板或对应开发者工具中填写。
+两个模板均固定为竖屏。抖音模板同时关闭系统状态栏，并已在 `project.config.json` 中配置正式 AppID：`ttd967afda4703e21202`。微信 AppID 仍应在 Cocos 构建面板或对应开发者工具中填写。
 
 构建前先运行：
 
@@ -49,7 +49,7 @@ npm run verify:release
 
 1. 打开 Cocos Creator 顶部菜单 `项目 -> 构建发布`。
 2. 发布平台选择 `抖音小游戏`，内部平台标识为 `bytedance-mini-game`。
-3. 填写正式 AppID。
+3. 确认 AppID 为 `ttd967afda4703e21202`。
 4. 构建后用抖音开发者工具打开。
 5. 在抖音开发者工具里测试：
    - 开始游戏

@@ -98,6 +98,7 @@ const requiredFiles = [
   'build-templates/wechatgame/game.json',
   'build-templates/wechatgame/open-data/index.js',
   'build-templates/bytedance-mini-game/game.json',
+  'build-templates/bytedance-mini-game/project.config.json',
   'build-templates/bytedance-mini-game/open-data/index.js',
   'release-assets/STORE_LISTING.md',
   'release-assets/PRIVACY_POLICY_TEMPLATE.md',
@@ -121,6 +122,11 @@ for (const platform of ['wechatgame', 'bytedance-mini-game']) {
   if (platform === 'wechatgame' && config && config.openDataContext !== 'open-data') {
     fail(`${configPath} 必须配置 open-data 开放数据域`);
   }
+}
+
+const douyinProjectConfig = readJson('build-templates/bytedance-mini-game/project.config.json');
+if (douyinProjectConfig && douyinProjectConfig.appid !== 'ttd967afda4703e21202') {
+  fail('抖音小游戏 project.config.json AppID 配置不正确');
 }
 
 verifyImage('release-assets/branding/app_icon_1024.png', 1024, 1024);
