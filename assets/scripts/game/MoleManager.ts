@@ -226,7 +226,7 @@ export class MoleManager extends Component {
         const roll = Math.random();
 
         if (this.difficultyLevel === 1) {
-            return 1;
+            return roll < 0.3 ? 2 : 1;
         }
 
         if (this.difficultyLevel === 2) {
@@ -242,7 +242,7 @@ export class MoleManager extends Component {
 
     private getMaxActiveMoles(): number {
         if (this.difficultyLevel === 1) {
-            return 1;
+            return 2;
         }
 
         if (this.difficultyLevel === 2) {
